@@ -21,9 +21,8 @@
 
 QT_CHARTS_USE_NAMESPACE
 
-FittsController::FittsController(FittsView *fittsView, FittsModel *fittsModel) {
-    this->fittsModel = fittsModel;
-    this->fittsView = fittsView;
+FittsController::FittsController(FittsModel* _fittsModel) : fittsModel(_fittsModel), fittsView(nullptr) {
+    fittsView = new FittsView(this, fittsModel);
     this->start();
 }
 

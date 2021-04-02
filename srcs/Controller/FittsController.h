@@ -4,14 +4,14 @@
 #include <QObject>
 #include <QElapsedTimer>
 
-class FittsView;
-class FittsModel;
+#include "../Model/FittsModel.h"
+#include "../View/FittsView.h"
 
 class FittsController : public QObject
 {
     Q_OBJECT
 public:
-    FittsController(FittsView *fittsView, FittsModel *fittsModel);
+    FittsController(FittsModel *fittsModel);
     virtual ~FittsController() {}
     void start();
 

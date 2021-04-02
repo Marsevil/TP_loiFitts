@@ -22,7 +22,7 @@ class FittsView : public QMainWindow
 {
     Q_OBJECT
 public:
-    FittsView(FittsModel *fittsModel);
+    FittsView(FittsController* _controller, FittsModel* _model);
     ~FittsView();
 
     void initWindows();
@@ -30,8 +30,8 @@ private:
     void updateTestMsg();
     void displayResults();
 
-    FittsModel *fittsModel;
-    FittsController *fittsController;
+    FittsController* fittsController;
+    FittsModel* fittsModel;
 
     QPushButton *leaveBtn;
     QPushButton *startBtn;

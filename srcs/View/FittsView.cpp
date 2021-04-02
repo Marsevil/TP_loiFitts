@@ -20,11 +20,8 @@
 
 QT_CHARTS_USE_NAMESPACE
 
-FittsView::FittsView(FittsModel *fittsModel) : QMainWindow() {
-    this->fittsModel = fittsModel;
-
-    this->initWindows();
-    this->fittsController = new FittsController(this, this->fittsModel);
+FittsView::FittsView(FittsController* _controller, FittsModel* _model) : QMainWindow(), fittsController(_controller), fittsModel(_model) {
+    initWindows();
 
     // Btn clicked
     connect(leaveBtn,SIGNAL(clicked()),fittsController,SLOT(quit()));

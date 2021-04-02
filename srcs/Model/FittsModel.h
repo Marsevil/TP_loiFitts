@@ -4,8 +4,8 @@
 #include <QPoint>
 #include <QList>
 
-class FittsView;
 class FittsController;
+class FittsView;
 
 class FittsModel
 {
@@ -13,8 +13,6 @@ public:
     FittsModel();
 
 private:
-    FittsView *fittsView;
-
     int cibleLeft = 0;
     int nbCible = 10;
     int minSize = 10;
@@ -33,8 +31,8 @@ private:
     QList<int> cercleSize;
     QList<qint64> times;
 
-    friend FittsView;
     friend FittsController;
+    friend FittsView;
 };
 
 #endif // FITTSMODEL_H
