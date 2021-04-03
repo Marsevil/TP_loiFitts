@@ -14,6 +14,8 @@
 
 - Toutes les vues sont regroupé dans une seule classe
 
+- Les classes sont toutes `friend` entre elles, elles devrait utiliser `getteurs` et `setteurs`
+
 **Les changements à opéré :**
 
 - Le contrôleur devrait être instancier en premier avec un modèle puis seulement après le contrôleur instancie une vue.
@@ -26,4 +28,6 @@
   
   - vue résultat (graphique)
 
-- 
+- Les classes ne doivent plus être `friend` entre elles.
+
+- Les classes doivent utiliser des accesseurs pour récupérer les données.
