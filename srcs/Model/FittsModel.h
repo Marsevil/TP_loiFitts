@@ -12,6 +12,8 @@ class FittsModel
 public:
     FittsModel();
 
+    inline double getA() {return a;}
+
 private:
     int cibleLeft = 0;
     int nbCible = 10;
@@ -32,7 +34,6 @@ private:
     QList<qint64> times;
 
     friend FittsController;
-    friend FittsView;
 };
 
 #endif // FITTSMODEL_H
