@@ -14,6 +14,8 @@
 
 - Toutes les Vues sont regroupées dans une seule classe
 
+- Les classes sont toutes `friend` entre elles, elles devrait utiliser `getteurs` et `setteurs`
+
 **Les changements à opérer :**
 
 - Le Contrôleur devrait être instancié en premier avec un Modèle puis seulement après le Contrôleur instancie une Vue.
@@ -26,4 +28,6 @@
   
   - Vue résultat (graphique)
 
-- 
+- Les classes ne doivent plus être `friend` entre elles.
+
+- Les classes doivent utiliser des accesseurs pour récupérer les données.
