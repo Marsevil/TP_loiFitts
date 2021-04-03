@@ -93,12 +93,12 @@ void FittsView::initWindows() {
     rappelRightLayout->addWidget(new QLabel("Variable b "),2,0);
 
     aValue = new QDoubleSpinBox;
-    aValue->setValue(this->fittsModel->a);
+    aValue->setValue(this->fittsModel->getA());
     rappelRightLayout->addWidget(aValue,1,1);
 
 
     bValue = new QDoubleSpinBox;
-    bValue->setValue(this->fittsModel->b);
+    bValue->setValue(this->fittsModel->getB());
     rappelRightLayout->addWidget(bValue,2,1);
 
 
@@ -111,18 +111,18 @@ void FittsView::initWindows() {
     configLayout->addWidget(new QLabel("Taille maximal cible:"),3,0);
 
     nbCible = new QSpinBox;
-    nbCible->setValue(this->fittsModel->nbCible);
+    nbCible->setValue(this->fittsModel->getNbCible());
     nbCible->setMaximum(100);
     configLayout->addWidget(nbCible,1,1);
 
     minSize = new QSpinBox;
     minSize->setMaximum(1000);
-    minSize->setValue(this->fittsModel->minSize);
+    minSize->setValue(this->fittsModel->getMinSize());
     configLayout->addWidget(minSize,2,1);
 
     maxSize = new QSpinBox;
     maxSize->setMaximum(1000);
-    maxSize->setValue(this->fittsModel->maxSize);
+    maxSize->setValue(this->fittsModel->getMaxSize());
     configLayout->addWidget(maxSize,3,1);
 
 
@@ -216,13 +216,13 @@ void FittsView::initWindows() {
 }
 
 void FittsView::updateTestMsg() {
-    this->testLabel->setText("<strong>Le test commencera après avoir appuyé sur la cible bleu.</strong> Nombre de cibles restantes : " + QString::number(this->fittsModel->cibleLeft));
+    this->testLabel->setText("<strong>Le test commencera après avoir appuyé sur la cible bleu.</strong> Nombre de cibles restantes : " + QString::number(this->fittsModel->getCibleLeft()));
 }
 
 
 void FittsView::displayResults() {
-    this->diffMoy->setText(QString::number(this->fittsModel->diffMoy));
-    this->ecartType->setText(QString::number(this->fittsModel->ecartType));
-    this->erreurType->setText(QString::number(this->fittsModel->erreurType));
-    this->itc95->setText(QString::number(this->fittsModel->itc95));
+    this->diffMoy->setText(QString::number(this->fittsModel->getDiffMoy()));
+    this->ecartType->setText(QString::number(this->fittsModel->getEcartType()));
+    this->erreurType->setText(QString::number(this->fittsModel->getErreurType()));
+    this->itc95->setText(QString::number(this->fittsModel->getItc95()));
 }

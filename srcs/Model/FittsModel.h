@@ -12,7 +12,18 @@ class FittsModel
 public:
     FittsModel();
 
+    inline int getCibleLeft() {return cibleLeft;}
+    inline int getNbCible() {return nbCible;}
+    inline int getMinSize() {return minSize;}
+    inline int getMaxSize() {return maxSize;}
+
     inline double getA() {return a;}
+    inline double getB() {return b;}
+
+    inline double getEcartType() {return ecartType;}
+    inline double getErreurType() {return erreurType;}
+    inline double getDiffMoy() {return diffMoy;}
+    inline double getItc95() {return itc95;}
 
 private:
     int cibleLeft = 0;
