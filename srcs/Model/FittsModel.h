@@ -36,8 +36,8 @@ public:
     inline void setMinSize(int _minSize) {minSize = _minSize;}
     inline void setMaxSize(int _maxSize) {maxSize = _maxSize;}
 
-    inline void setA(int _a) {a = _a;}
-    inline void setB(int _b) {b = _b;}
+    inline void setA(double _a) {a = _a;}
+    inline void setB(double _b) {b = _b;}
 
     inline void setEcartType(double _ecartType) {ecartType = _ecartType;}
     inline void setErreurType(double _erreurType) {erreurType = _erreurType;}
