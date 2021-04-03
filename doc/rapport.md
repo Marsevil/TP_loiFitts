@@ -2,7 +2,7 @@
 
 ## 1. Donner une critique de l'interface fournie et du programme QT associé
 
-- On ne voit pas la formule
+- La formule mathématique n'apparait pas à l'écran
 
 - Le titre des groupe box n'est pas assez visible
 
@@ -10,20 +10,36 @@
 
 **Pour l'instant :**
 
-- Le Model construit la vue qui construit le contrôleur
+- Le Modèle construit la Vue qui construit le Contrôleur
 
-- Toutes les vues sont regroupé dans une seule classe
+- Toutes les Vues sont regroupées dans une seule classe
 
-**Les changements à opéré :**
+- Les classes sont toutes `friend` entre elles, elles devrait utiliser `getteurs` et `setteurs`
 
-- Le contrôleur devrait être instancier en premier avec un modèle puis seulement après le contrôleur instancie une vue.
+**Les changements à opérer :**
 
-- Les trois vues devrait être séparé :
+- Le Contrôleur devrait être instancié en premier avec un Modèle puis seulement après le Contrôleur instancie une Vue.
+
+- Les trois Vues devraient être séparées :
   
-  - vue des paramètres
+  - Vue des paramètres
   
-  - vue expérimentale
+  - Vue expérimentale
   
-  - vue résultat (graphique)
+  - Vue résultat (graphique)
 
-- 
+- Les classes ne doivent plus être `friend` entre elles.
+
+- Les classes doivent utiliser des accesseurs pour récupérer les données.
+
+## 3. Repenser l'interface
+
+### Model
+
+- Sauvegarde des paramètres sur le disque pour éviter de devoir les re sélectionner à chaque lancement de l'application.
+
+### Contrôleur
+
+### Vue
+
+- L'accès aux paramètres devrait être demandé par l'utilisateur.
