@@ -31,11 +31,11 @@ void FittsController::start() {
 }
 
 void FittsController::startSimulation() {
-    this->fittsView->mainStack->setCurrentIndex(1);
+    this->fittsView->setMainStackIndex(1);
     this->fittsModel->setCibleLeft(this->fittsModel->getNbCible());
     this->fittsView->updateTestMsg();
-    this->fittsView->resultBtn->setEnabled(false);
-    this->fittsView->graphicView->setEnabled(true);
+    this->fittsView->setResultButtonEnabled(false);
+    this->fittsView->setGraphicViewEnabled(true);
     this->fittsModel->clearCercleSize();
     this->fittsModel->clearCercleCenter();
     this->fittsModel->clearClickPoints();
@@ -49,10 +49,10 @@ void FittsController::quit() {
 }
 
 void FittsController::backToSettings() {
-    this->fittsView->mainStack->setCurrentIndex(0);
+    this->fittsView->setMainStackIndex(0);
 }
 void FittsController::resultClicked() {
-    this->fittsView->mainStack->setCurrentIndex(2);
+    this->fittsView->setMainStackIndex(2);
 
     this->calculateResult();
 }
@@ -82,7 +82,7 @@ void FittsController::cibleClicked(int x, int y) {
         this->nextCible();
     }
     else {
-        QPointF coords = this->fittsView->graphicView->mapToScene(x,y);
+        QPointF coords = this->fittsView->getGraphicViewMapToScene(x,y);
         if(sqrt(pow(coords.x() - this->fittsModel->getCercleCenter().last().x(),2) + pow(coords.y() - this->fittsModel->getCercleCenter().last().y(),2)) <= this->fittsModel->getCercleSize().last() / 2) {
             // On stock le temps de click
             this->fittsModel->appendTimes(timer->elapsed());
@@ -101,7 +101,7 @@ void FittsController::nextCible() {
         this->fittsModel->setCibleLeft(this->fittsModel->getCibleLeft() - 1);
     this->fittsView->updateTestMsg();
 
-    QGraphicsScene *scene = this->fittsView->scene;
+    QGraphicsScene *scene = this->fittsView->getScene();
     scene->clear();
 
     // On stop si c'est finis
@@ -115,8 +115,8 @@ void FittsController::nextCible() {
     int size = qrand() % ((this->fittsModel->getMaxSize() + 1) - this->fittsModel->getMinSize()) + this->fittsModel->getMinSize();
     // Car on veut le rayon
     // On place le cercle dans la scene (Attention faut pas qu'il soit en dehors du cadre)
-    int sceneW = int(this->fittsView->scene->width());
-    int sceneH = int(this->fittsView->scene->height());
+    int sceneW = int(scene->width());
+    int sceneH = int(scene->height());
 
     qreal posX = qrand() % ((sceneW - size) - size) + size;
     qreal posY = qrand() % ((sceneH - size) - size) + size;
@@ -131,19 +131,19 @@ void FittsController::nextCible() {
 
 
 void FittsController::finish() {
-    this->fittsView->graphicView->setEnabled(false);
-    this->fittsView->resultBtn->setEnabled(true);
+    this->fittsView->setGraphicViewEnabled(false);
+    this->fittsView->setResultButtonEnabled(true);
 }
 
 void FittsController::initGame() {
-    QGraphicsScene *scene = this->fittsView->scene;
+    QGraphicsScene *scene = this->fittsView->getScene();
     scene->clear();
 
-    if(this->fittsModel->getMaxSize() >= this->fittsView->graphicView->width() / 2)
-        this->fittsModel->setMaxSize(this->fittsView->graphicView->width() / 2);
+    if(this->fittsModel->getMaxSize() >= this->fittsView->getGraphicViewWidth() / 2)
+        this->fittsModel->setMaxSize(this->fittsView->getGraphicViewWidth() / 2);
 
-    if(this->fittsModel->getMaxSize() >= this->fittsView->graphicView->height() / 2)
-        this->fittsModel->setMaxSize(this->fittsView->graphicView->height() / 2);
+    if(this->fittsModel->getMaxSize() >= this->fittsView->getGraphicViewHeight() / 2)
+        this->fittsModel->setMaxSize(this->fittsView->getGraphicViewHeight() / 2);
 
     qreal posX = scene->width() / 2;
     qreal posY = scene->height() / 2;
@@ -154,8 +154,9 @@ void FittsController::initGame() {
 
 void FittsController::calculateResult() {
     QChart *chart = new QChart;
-    this->fittsView->plot->setChart(chart);
-    this->fittsView->plot->setRenderHint(QPainter::Antialiasing);
+
+    this->fittsView->setPlotChart(chart);
+    this->fittsView->setPlotRenderHint(QPainter::Antialiasing);
     chart->setTitle("Résultats loi Fitts");
     chart->setAnimationOptions(QChart::AllAnimations);
     chart->createDefaultAxes();

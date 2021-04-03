@@ -24,11 +24,25 @@ class FittsView : public QMainWindow
 public:
     FittsView(FittsController* _controller, FittsModel* _model);
     ~FittsView();
-
     void initWindows();
-private:
     void updateTestMsg();
     void displayResults();
+
+    void setMainStackIndex(int _index) {mainStack->setCurrentIndex(_index);}
+    void setResultButtonEnabled(bool _bool) {resultBtn->setEnabled(_bool);}
+    void setGraphicViewEnabled(bool _bool) {graphicView->setEnabled(_bool);}
+    void setPlotChart(QChart* _chart) {plot->setChart(_chart);}
+    void setPlotRenderHint(QPainter::RenderHint _option) {plot->setRenderHint(_option);}
+
+
+    QPointF getGraphicViewMapToScene(int _x, int _y) {return graphicView->mapToScene(_x,_y);}
+    int getGraphicViewWidth() {return graphicView->width();}
+    int getGraphicViewHeight() {return graphicView->height();}
+    QGraphicsScene* getScene() {return scene;}
+
+
+
+private:
 
     FittsController* fittsController;
     FittsModel* fittsModel;
@@ -59,7 +73,6 @@ private:
 
     QChartView *plot;
 
-    friend FittsController;
 };
 
 #endif // MAINWINDOW_H
