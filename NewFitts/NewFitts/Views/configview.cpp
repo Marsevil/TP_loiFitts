@@ -102,6 +102,7 @@ ConfigView::ConfigView(Config _config, QWidget *parent)
     QLayout* nbTargetsLayout = new QHBoxLayout(nbTargets);
     QLabel* nbTargetsLabel = new QLabel("Nombre de cible :", nbTargets);
     QSpinBox* nbTargetsSelector = new QSpinBox(nbTargets);
+    nbTargetsSelector->setMinimum(0);
     nbTargetsSelector->setValue(config.nbPoint);
     nbTargetsLayout->addWidget(nbTargetsLabel);
     nbTargetsLayout->addWidget(nbTargetsSelector);
@@ -112,6 +113,7 @@ ConfigView::ConfigView(Config _config, QWidget *parent)
     QLayout* minimumSizeLayout = new QHBoxLayout(minimumSize);
     QLabel* minimumSizeLabel = new QLabel("Taille minimum de la cible (mm) :", minimumSize);
     QSpinBox* minimumSizeSelector = new QSpinBox(minimumSize);
+    minimumSizeSelector->setMinimum(0);
     minimumSizeSelector->setMaximum(MAX_MIN_RANGE);
     minimumSizeSelector->setValue(config.minSize);
     minimumSizeLayout->addWidget(minimumSizeLabel);
@@ -124,6 +126,7 @@ ConfigView::ConfigView(Config _config, QWidget *parent)
     QLabel* maximumSizeLabel = new QLabel("Taille minimum de la cible (mm) :", maximumSize);
     QSpinBox* maximumSizeSelector = new QSpinBox(maximumSize);
     maximumSizeSelector->setMaximum(MAX_MIN_RANGE);
+    maximumSizeSelector->setMinimum(0);
     maximumSizeSelector->setValue(config.maxSize);
     maximumSizeLayout->addWidget(maximumSizeLabel);
     maximumSizeLayout->addWidget(maximumSizeSelector);
@@ -138,4 +141,13 @@ ConfigView::ConfigView(Config _config, QWidget *parent)
     buttonsLayout->addWidget(cancel);
     QPushButton* confirm = new QPushButton("Valider", buttons);
     buttonsLayout->addWidget(confirm);
+
+    connect(aSelector, SIGNAL(valueChanged(double)), this, SLOT(updateA(double)));
+    connect(bSelector, SIGNAL(valueChanged(double)), this, SLOT(updateB(double)));
+    connect(nbTargetsSelector, SIGNAL(valueChanged(int)), this, SLOT(updateNbPoint(int)));
+    connect(maximumSizeSelector, SIGNAL(valueChanged(int)), this, SLOT(updateMaxSize(int)));
+    connect(minimumSizeSelector, SIGNAL(valueChanged(int)), this, SLOT(updateMinSize(int)));
+
+    connect(cancel, SIGNAL(clicked()), this, SLOT(cancelPressed()));
+    connect(confirm, SIGNAL(clicked()), this, SLOT(confirmPressed()));
 }
