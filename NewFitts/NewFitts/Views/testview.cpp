@@ -43,4 +43,13 @@ TestView::TestView(QWidget *parent) : QWidget(parent)
     scene->setSceneRect(0,0,graphicView->width(),300);
 
     mainLayout->addWidget(graphBox);
+
+    // Bouton Start Test
+    QLayout* sceneLayout = new QVBoxLayout(graphicView);
+    QPushButton* startButton = new QPushButton("Démarrer le test");
+    sceneLayout->addWidget(startButton);
+    sceneLayout->setAlignment(Qt::AlignHCenter);
+    startButton->setGeometry(300, 300, 300, 300);
+
+
 }
