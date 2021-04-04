@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     Controllers/fittscontroller.cpp \
+    Models/fittsmodel.cpp \
     Views/configview.cpp \
     Views/graphview.cpp \
     Views/testview.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
 
 HEADERS += \
     Controllers/fittscontroller.h \
+    Models/fittsmodel.h \
     Views/configview.h \
     Views/graphview.h \
     Views/mainwindow.h \
