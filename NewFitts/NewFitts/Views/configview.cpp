@@ -5,25 +5,33 @@
 #include <QLabel>
 #include <QGroupBox>
 #include <QSpinBox>
+#include <QSvgWidget>
+#include <QPushButton>
 
 ConfigView::ConfigView(QWidget *parent) : QWidget(parent)
 {
     QLayout* mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
-    mainLayout->setAlignment(Qt::AlignHCenter);
 
     // Titre
     QWidget* titleBox = new QWidget(this);
     QLayout* titleBoxLayout = new QVBoxLayout(titleBox);
+    titleBox->setLayout(titleBoxLayout);
     titleBoxLayout->setAlignment(Qt::AlignHCenter);
     QLabel* title = new QLabel("Rappel de la formule", this);
     QFont titleFont("Calibri", 20, QFont::Bold);
     title->setFont(titleFont);
     titleBoxLayout->addWidget(title);
-    titleBox->setLayout(titleBoxLayout);
     mainLayout->addWidget(titleBox);
 
     // Formule
+    QWidget* formulaBox = new QWidget(this);
+    QLayout* formulaBoxLayout = new QVBoxLayout(formulaBox);
+    formulaBoxLayout->setAlignment(Qt::AlignHCenter);
+    formulaBox->setLayout(formulaBoxLayout);
+    QSvgWidget* formula = new QSvgWidget("./fittsFormula.svg", formulaBox);
+    formulaBoxLayout->addWidget(formula);
+    mainLayout->addWidget(formulaBox);
 
     QFont font("Calibri", 15, QFont::Bold);
 
@@ -111,4 +119,14 @@ ConfigView::ConfigView(QWidget *parent) : QWidget(parent)
     maximumSizeLayout->addWidget(maximumSizeLabel);
     maximumSizeLayout->addWidget(maximumSizeSelector);
     testSettingsLayout->addWidget(maximumSize);
+
+    // Boutons
+    QWidget* buttons = new QWidget(this);
+    mainLayout->addWidget(buttons);
+    QLayout* buttonsLayout = new QHBoxLayout(buttons);
+    buttons->setLayout(buttonsLayout);
+    QPushButton* cancel = new QPushButton("Annuler", buttons);
+    buttonsLayout->addWidget(cancel);
+    QPushButton* confirm = new QPushButton("Valider", buttons);
+    buttonsLayout->addWidget(confirm);
 }

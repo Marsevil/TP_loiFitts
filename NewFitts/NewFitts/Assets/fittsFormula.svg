@@ -7,9 +7,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="39.732132mm"
-   height="10.588511mm"
-   viewBox="0 0 39.732132 10.588511"
+   width="83.464264mm"
+   height="24.195177mm"
+   viewBox="0 0 83.464264 24.195176"
    version="1.1"
    id="svg1617"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
@@ -32,9 +32,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="87.60788"
-     inkscape:cy="128.26901"
+     inkscape:zoom="32"
+     inkscape:cx="203.26191"
+     inkscape:cy="9.4577076"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -52,7 +52,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -60,10 +60,17 @@
      inkscape:label="Calque 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-78.780134,-61.733292)">
+     transform="translate(-57.037865,-55.050747)">
+    <rect
+       style="fill:#ffffff;fill-opacity:0.5;fill-rule:evenodd;stroke:none;stroke-width:1.32292"
+       id="rect957"
+       width="83.464264"
+       height="24.195177"
+       x="57.037865"
+       y="55.050747" />
     <g
        id="g914"
-       transform="matrix(0.08466666,0,0,0.08466666,-6.1970905,41.977738)">
+       transform="matrix(0.16933332,0,0,0.16933332,-111.04038,16.927929)">
       <g
          id="g916"
          clip-path="url(#clipPath920)">
@@ -162,5 +169,10 @@
         </g>
       </g>
     </g>
+    <path
+       style="fill:#24292e;fill-opacity:1;stroke:none;stroke-width:0.0102339;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 108.02982,56.442505 0.0622,-0.292509 c 2.31481,-0.12478 3.55234,-0.1123 4.06024,-0.0054 0.32609,0.11946 0.34794,0.138841 0.59861,0.301997 z"
+       id="path961"
+       sodipodi:nodetypes="ccccc" />
   </g>
 </svg>
