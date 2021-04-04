@@ -1,7 +1,7 @@
 #include "graphview.h"
 
 
-GraphView::GraphView(QWidget *parent) : QWidget(parent)
+GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) : QWidget(parent)
 {
     QVBoxLayout* mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
@@ -23,12 +23,12 @@ GraphView::GraphView(QWidget *parent) : QWidget(parent)
     QLayout* graphBoxLayout = new QVBoxLayout(graphBox);
     graphBoxLayout->setAlignment(Qt::AlignHCenter);
 
-    QGraphicsView* graphicView = new QGraphicsView;
+    QGraphicsView* graphicView = new QGraphicsView(graphBox);
     graphBoxLayout->addWidget(graphicView);
     graphicView->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff);
     graphicView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    QGraphicsScene* scene = new QGraphicsScene;
+    QGraphicsScene* scene = new QGraphicsScene(graphicView);
     graphicView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
     graphicView->setScene(scene);
     scene->setSceneRect(0,0,graphicView->width(),300);
@@ -49,26 +49,17 @@ GraphView::GraphView(QWidget *parent) : QWidget(parent)
     QLayout* parametreLayout = new QVBoxLayout();
     parametreBox->setLayout(parametreLayout);
 
-    QLabel* aLabel = new QLabel("Valeur de a : ");
+    QLabel* aLabel = new QLabel("Valeur de a : " + QString::number(config.a), parametreBox);
     parametreLayout->addWidget(aLabel);
-    //a = new QLabel;
-    //parametreLayout->addWidget(a);
 
-    QLabel* bLabel = new QLabel("Valeur de b : ");
+    QLabel* bLabel = new QLabel("Valeur de b : " + QString::number(config.b), parametreBox);
     parametreLayout->addWidget(bLabel);
-    //b = new QLabel;
-    //parametreLayout->addWidget(b);
 
-    QLabel* nbCibleLabel = new QLabel("Nombre de cibles : ");
+    QLabel* nbCibleLabel = new QLabel("Nombre de cibles : " + QString::number(config.nbPoint), parametreBox);
     parametreLayout->addWidget(nbCibleLabel);
-    //nbCible = new QLabel;
-    //parametreLayout->addWidget(nbCible);
 
-    QLabel* tailleIntervalleLabel = new QLabel("Intervalle de taille des cibles : ");
+    QLabel* tailleIntervalleLabel = new QLabel("Intervalle de taille des cibles : " + QString::number(config.maxSize - config.minSize), parametreBox);
     parametreLayout->addWidget(tailleIntervalleLabel);
-    //range = new QLabel;
-    //range = tailleMax - tailleMin;
-    //parametreLayout->addWidget(range);
 
 
     // Résultats du test
@@ -78,36 +69,24 @@ GraphView::GraphView(QWidget *parent) : QWidget(parent)
     QLayout* resultatLayout = new QVBoxLayout();
     resultatBox->setLayout(resultatLayout);
 
-    QLabel* ecartTypeLabel = new QLabel("Ecart-Type : ");
+    QLabel* ecartTypeLabel = new QLabel("Ecart-Type : " + QString::number(stats.ecartType), resultatBox);
     resultatLayout->addWidget(ecartTypeLabel);
-    //ecartType = new QLabel;
-    //resultBoxLayout->addWidget(ecartType,0,1);
 
-    QLabel* erreurTypeLabel = new QLabel("Erreur-Type : ");
+    QLabel* erreurTypeLabel = new QLabel("Erreur-Type : " + QString::number(stats.erreurType), resultatBox);
     resultatLayout->addWidget(erreurTypeLabel);
-    //erreurType = new QLabel;
-    //resultBoxLayout->addWidget(erreurType,1,1);
 
-    QLabel* differenceLabel = new QLabel("Différence moyenne : ");
+    QLabel* differenceLabel = new QLabel("Différence moyenne : " + QString::number(stats.diffMoy), resultatBox);
     resultatLayout->addWidget(differenceLabel);
-    //diffMoy = new QLabel;
-    //resultBoxLayout->addWidget(diffMoy,0,3);
 
-    QLabel* intervalleLabel = new QLabel("Intervalle de confiance à 95% : ");
+    QLabel* intervalleLabel = new QLabel("Intervalle de confiance à 95% : " + QString::number(stats.itc95), resultatBox);
     resultatLayout->addWidget(intervalleLabel);
-    //itc95 = new QLabel;
-    //resultBoxLayout->addWidget(itc95,1,3);
 
-     /*
-    QHBoxLayout *btnLayout = new QHBoxLayout;
+    QHBoxLayout* btnLayout = new QHBoxLayout(this);
+    mainLayout->addItem(btnLayout);
 
-    btnLayout = new QHBoxLayout;
-    resultLayout->addLayout(btnLayout);
+    QPushButton* leaveBtn = new QPushButton("Quitter", this);
+    btnLayout->addWidget(leaveBtn);
 
-    resultLeaveBtn = new QPushButton("Quitter");
-    btnLayout->addWidget(resultLeaveBtn);
-
-    restartBtn = new QPushButton("Recommencer");
+    QPushButton* restartBtn = new QPushButton("Recommencer", this);
     btnLayout->addWidget(restartBtn);
-    */
 }

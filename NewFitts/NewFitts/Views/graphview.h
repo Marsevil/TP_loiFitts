@@ -12,11 +12,13 @@
 #include <QPushButton>
 #include <QGroupBox>
 
+#include "../Models/fittsmodel.h"
+
 class GraphView : public QWidget
 {
     Q_OBJECT
 public:
-    explicit GraphView(QWidget *parent = nullptr);
+    explicit GraphView(Config const& config, Stats const& stats, QWidget *parent = nullptr);
 
 private:
 
