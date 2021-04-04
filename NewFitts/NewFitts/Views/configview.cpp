@@ -94,7 +94,7 @@ ConfigView::ConfigView(QWidget *parent) : QWidget(parent)
     nbTargetsLayout->addWidget(nbTargetsSelector);
     testSettingsLayout->addWidget(nbTargets);
 
-    // Taille minimal de la cible
+    // Taille minimale de la cible
     QWidget* minimumSize = new QWidget(testSettings);
     QLayout* minimumSizeLayout = new QHBoxLayout(minimumSize);
     QLabel* minimumSizeLabel = new QLabel("Taille minimum de la cible :", minimumSize);
@@ -103,7 +103,7 @@ ConfigView::ConfigView(QWidget *parent) : QWidget(parent)
     minimumSizeLayout->addWidget(minimumSizeSelector);
     testSettingsLayout->addWidget(minimumSize);
 
-    // Taille maximal de la cible
+    // Taille maximale de la cible
     QWidget* maximumSize = new QWidget(testSettings);
     QLayout* maximumSizeLayout = new QHBoxLayout(maximumSize);
     QLabel* maximumSizeLabel = new QLabel("Taille minimum de la cible :", maximumSize);
