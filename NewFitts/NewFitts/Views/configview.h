@@ -3,8 +3,18 @@
 
 #include <QWidget>
 #include <QDebug>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QGroupBox>
+#include <QSpinBox>
+#include <QDoubleSpinBox>
+#include <QSvgWidget>
+#include <QPushButton>
 
 #include "../Models/fittsmodel.h"
+
+class FittsController;
 
 class ConfigView : public QWidget
 {
@@ -12,10 +22,11 @@ class ConfigView : public QWidget
 
     int const MAX_MIN_RANGE = 250;
 
+    FittsController* controller;
     Config config;
 
 public:
-    explicit ConfigView(Config _config, QWidget *parent = nullptr);
+    explicit ConfigView(Config _config, FittsController* _controller, QWidget *parent = nullptr);
 
 private slots:
     inline void updateA(double _a) { config.a = _a; }
@@ -24,16 +35,8 @@ private slots:
     inline void updateMaxSize(int _maxSize) { config.maxSize = (unsigned)_maxSize; }
     inline void updateNbPoint(int _nbPoint) { config.nbPoint = (unsigned)_nbPoint; }
 
-    inline void cancelPressed() { qDebug() << "Cancel pressed !!"; }
-    inline void confirmPressed() { qDebug() << "a = " << config.a
-                                            << " b = " << config.b
-                                            << " minSize = " << config.minSize
-                                            << " maxSize = " << config.maxSize
-                                            << " nbPoint = " << config.nbPoint; }
-
-signals:
-    void cancel();
-    void confirm(Config);
+    void cancelPressed() const;
+    void confirmPressed() const;
 };
 
 #endif // CONFIGVIEW_H

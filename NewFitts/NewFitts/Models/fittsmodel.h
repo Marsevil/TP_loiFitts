@@ -2,6 +2,7 @@
 #define FITTSMODEL_H
 
 #include <list>
+#include <QDebug>
 
 struct Config {
     double a;

@@ -13,6 +13,9 @@ class FittsController
 public:
     FittsController(FittsModel* _model);
     ~FittsController();
+
+    void cancelConfig() const;
+    void updateConfig(Config _config) const;
 };
 
 #endif // FITTSCONTROLLER_H

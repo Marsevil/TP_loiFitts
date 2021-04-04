@@ -14,3 +14,12 @@ FittsController::~FittsController() {
 void FittsController::run() {
     mainWindow->show();
 }
+
+void FittsController::cancelConfig() const {
+    mainWindow->setTestView();
+}
+
+void FittsController::updateConfig(Config _config) const {
+    model->setConfig(_config);
+    mainWindow->setTestView();
+}
