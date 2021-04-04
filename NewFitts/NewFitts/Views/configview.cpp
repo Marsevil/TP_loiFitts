@@ -1,8 +1,7 @@
 #include "configview.h"
-#include "../Controllers/fittscontroller.h"
 
-ConfigView::ConfigView(Config _config, FittsController* _controller, QWidget *parent)
-    : QWidget(parent), controller(_controller), config(_config)
+ConfigView::ConfigView(Config _config, QWidget *parent)
+    : QWidget(parent), config(_config)
 {
     QLayout* mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
@@ -142,12 +141,4 @@ ConfigView::ConfigView(Config _config, FittsController* _controller, QWidget *pa
 
     connect(cancel, SIGNAL(clicked()), this, SLOT(cancelPressed()));
     connect(confirm, SIGNAL(clicked()), this, SLOT(confirmPressed()));
-}
-
-void ConfigView::cancelPressed() const {
-    controller->cancelConfig();
-}
-
-void ConfigView::confirmPressed() const {
-    controller->updateConfig(config);
 }
