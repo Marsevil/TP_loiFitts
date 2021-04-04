@@ -5,10 +5,12 @@
 #include <QLabel>
 #include <QGroupBox>
 #include <QSpinBox>
+#include <QDoubleSpinBox>
 #include <QSvgWidget>
 #include <QPushButton>
 
-ConfigView::ConfigView(QWidget *parent) : QWidget(parent)
+ConfigView::ConfigView(Config _config, QWidget *parent)
+    : QWidget(parent), config(_config)
 {
     QLayout* mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
@@ -58,7 +60,8 @@ ConfigView::ConfigView(QWidget *parent) : QWidget(parent)
     QLayout* aSettingsLayout = new QHBoxLayout(aSettings);
     QLabel* aLabel = new QLabel("a = ", aSettings);
     aLabel->setFont(font);
-    QSpinBox* aSelector = new QSpinBox(aSettings);
+    QDoubleSpinBox* aSelector = new QDoubleSpinBox(aSettings);
+    aSelector->setValue(config.a);
     aSettings->setLayout(aSettingsLayout);
     aSettingsLayout->addWidget(aLabel);
     aSettingsLayout->addWidget(aSelector);
@@ -69,7 +72,8 @@ ConfigView::ConfigView(QWidget *parent) : QWidget(parent)
     QLayout* bSettingsLayout = new QHBoxLayout(bSettings);
     QLabel* bLabel = new QLabel("b = ", bSettings);
     bLabel->setFont(font);
-    QSpinBox* bSelector = new QSpinBox(bSettings);
+    QDoubleSpinBox* bSelector = new QDoubleSpinBox(bSettings);
+    bSelector->setValue(config.b);
     bSettings->setLayout(bSettingsLayout);
     bSettingsLayout->addWidget(bLabel);
     bSettingsLayout->addWidget(bSelector);
@@ -98,6 +102,7 @@ ConfigView::ConfigView(QWidget *parent) : QWidget(parent)
     QLayout* nbTargetsLayout = new QHBoxLayout(nbTargets);
     QLabel* nbTargetsLabel = new QLabel("Nombre de cible :", nbTargets);
     QSpinBox* nbTargetsSelector = new QSpinBox(nbTargets);
+    nbTargetsSelector->setValue(config.nbPoint);
     nbTargetsLayout->addWidget(nbTargetsLabel);
     nbTargetsLayout->addWidget(nbTargetsSelector);
     testSettingsLayout->addWidget(nbTargets);
@@ -105,8 +110,10 @@ ConfigView::ConfigView(QWidget *parent) : QWidget(parent)
     // Taille minimale de la cible
     QWidget* minimumSize = new QWidget(testSettings);
     QLayout* minimumSizeLayout = new QHBoxLayout(minimumSize);
-    QLabel* minimumSizeLabel = new QLabel("Taille minimum de la cible :", minimumSize);
+    QLabel* minimumSizeLabel = new QLabel("Taille minimum de la cible (mm) :", minimumSize);
     QSpinBox* minimumSizeSelector = new QSpinBox(minimumSize);
+    minimumSizeSelector->setMaximum(MAX_MIN_RANGE);
+    minimumSizeSelector->setValue(config.minSize);
     minimumSizeLayout->addWidget(minimumSizeLabel);
     minimumSizeLayout->addWidget(minimumSizeSelector);
     testSettingsLayout->addWidget(minimumSize);
@@ -114,8 +121,10 @@ ConfigView::ConfigView(QWidget *parent) : QWidget(parent)
     // Taille maximale de la cible
     QWidget* maximumSize = new QWidget(testSettings);
     QLayout* maximumSizeLayout = new QHBoxLayout(maximumSize);
-    QLabel* maximumSizeLabel = new QLabel("Taille minimum de la cible :", maximumSize);
+    QLabel* maximumSizeLabel = new QLabel("Taille minimum de la cible (mm) :", maximumSize);
     QSpinBox* maximumSizeSelector = new QSpinBox(maximumSize);
+    maximumSizeSelector->setMaximum(MAX_MIN_RANGE);
+    maximumSizeSelector->setValue(config.maxSize);
     maximumSizeLayout->addWidget(maximumSizeLabel);
     maximumSizeLayout->addWidget(maximumSizeSelector);
     testSettingsLayout->addWidget(maximumSize);

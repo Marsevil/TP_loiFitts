@@ -1,8 +1,8 @@
 #include "fittscontroller.h"
 
-FittsController::FittsController() : mainWindow(nullptr)
+FittsController::FittsController(FittsModel* _model) : model(_model), mainWindow(nullptr)
 {
-    mainWindow = new MainWindow();
+    mainWindow = new MainWindow(this, model);
 
     run();
 }

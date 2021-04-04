@@ -2,14 +2,16 @@
 #define FITTSCONTROLLER_H
 
 #include "../Views/mainwindow.h"
+#include "../Models/fittsmodel.h"
 
 class FittsController
 {
+    FittsModel* model;
     MainWindow* mainWindow;
 
     void run();
 public:
-    FittsController();
+    FittsController(FittsModel* _model);
     ~FittsController();
 };
 

@@ -3,8 +3,8 @@
 #include <QAction>
 #include <QMenuBar>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+MainWindow::MainWindow(FittsController* _controller, FittsModel* _model, QWidget *parent)
+    : QMainWindow(parent), controller(_controller), model(_model)
 {
     setConfigView();
 
