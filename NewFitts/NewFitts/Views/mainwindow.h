@@ -15,7 +15,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
+public slots:
     inline void setTestView() { setCentralWidget(new TestView); adjustSize(); }
     inline void setGraphView() { setCentralWidget(new GraphView); adjustSize(); }
     inline void setConfigView() { setCentralWidget(new ConfigView); adjustSize(); }
