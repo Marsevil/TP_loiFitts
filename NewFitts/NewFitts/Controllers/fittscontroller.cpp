@@ -9,6 +9,7 @@ FittsController::FittsController(FittsModel* _model) : model(_model), mainWindow
 
 FittsController::~FittsController() {
     delete mainWindow;
+    delete model;
 }
 
 void FittsController::run() {
