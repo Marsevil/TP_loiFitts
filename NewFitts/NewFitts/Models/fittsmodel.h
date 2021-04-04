@@ -17,7 +17,7 @@ struct Stats {
     double erreurType;
     double diffMoy;
     double itc95;
-    std::list<std::size_t> times;
+    std::list<double> times;
     std::list<double> distances;
 };
 

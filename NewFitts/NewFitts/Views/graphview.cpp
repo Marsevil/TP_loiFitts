@@ -21,19 +21,42 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
     // Graph
     QWidget* graphBox = new QWidget(this);
     QLayout* graphBoxLayout = new QVBoxLayout(graphBox);
+    graphBox->setLayout(graphBoxLayout);
     graphBoxLayout->setAlignment(Qt::AlignHCenter);
-
-    QGraphicsView* graphicView = new QGraphicsView(graphBox);
-    graphBoxLayout->addWidget(graphicView);
-    graphicView->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff);
-    graphicView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
-    QGraphicsScene* scene = new QGraphicsScene(graphicView);
-    graphicView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
-    graphicView->setScene(scene);
-    scene->setSceneRect(0,0,graphicView->width(),300);
-
     mainLayout->addWidget(graphBox);
+
+    QChartView* plot = new QChartView(graphBox);
+    plot->setRenderHint(QPainter::Antialiasing);
+    graphBoxLayout->addWidget(plot);
+    QChart* chart = new QChart;
+    plot->setChart(chart);
+    chart->setTitle("Résultat loi Fitts");
+    chart->setAnimationOptions(QChart::AllAnimations);
+    chart->createDefaultAxes();
+    chart->legend()->setVisible(true);
+    chart->legend()->setAlignment(Qt::AlignBottom);
+
+    QLineSeries* expSeries = new QLineSeries(chart);
+    expSeries->setName("Courbe expérimental");
+    QCategoryAxis* axis = new QCategoryAxis(chart);
+
+    std::list<double>::const_iterator time = stats.times.begin();
+    for (std::size_t i = 0; i < config.nbPoint; ++i) {
+        expSeries->append(i, *time);
+
+        axis->append(QString::number(i+1) + "<br/>T: " + QString::number(*time), i);
+
+        ++time;
+    }
+    axis->setLabelsPosition(QCategoryAxis::AxisLabelsPositionOnValue);
+
+    chart->addSeries(expSeries);
+
+    chart->setAxisX(axis, expSeries);
+
+    QValueAxis* axisY = new QValueAxis;
+    axisY->setTitleText("temps (en ms)");
+    chart->setAxisY(axisY, expSeries);
 
     // Statistiques
     QWidget* statBox = new QWidget(this);
