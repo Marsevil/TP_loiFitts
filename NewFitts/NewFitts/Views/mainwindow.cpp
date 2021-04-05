@@ -40,7 +40,7 @@ void MainWindow::setTestView()
 
     connect(view, SIGNAL(startTest(int, int)), this, SLOT(launchTest(int, int)));
     connect(this, SIGNAL(executeTest(std::list<QPoint>, std::list<double>)), view, SLOT(executeTestHandler(std::list<QPoint>, std::list<double>)));
-    connect(view, SIGNAL(endTest()), this, SLOT(finishTest()));
+    connect(view, SIGNAL(endTest(std::list<qint64>)), this, SLOT(finishTest(std::list<qint64>)));
 }
 
 void MainWindow::setGraphView() {

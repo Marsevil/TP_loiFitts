@@ -33,6 +33,6 @@ private slots:
     void finishTest(std::list<qint64> const&);
 
 signals:
-    void executeTest(std::list<QPoint>, std::list<double>) const;
+    void executeTest(std::list<QPoint>, std::list<double> const&) const;
 };
 #endif // MAINWINDOW_H

@@ -60,7 +60,7 @@ TestView::TestView(QWidget *parent) : QWidget(parent), timer(nullptr)
 void TestView::startTestButtonHandler()
 {
     if (timer) {
-        emit endTest();
+        emit endTest(elapsedTimes);
     } else {
         startButton->setVisible(false);
         emit startTest(scene->width(), scene->height());
@@ -68,7 +68,7 @@ void TestView::startTestButtonHandler()
 }
 
 
-void TestView::executeTestHandler(std::list<QPoint> _coordList, std::list<double> _sizeList)
+void TestView::executeTestHandler(std::list<QPoint> const& _coordList, std::list<double> const& _sizeList)
 {
     coordList = _coordList;
     sizeList = _sizeList;

@@ -35,7 +35,7 @@ public:
 
 private slots:
     void startTestButtonHandler();
-    void executeTestHandler(std::list<QPoint> _coordList, std::list<double> _sizeList);
+    void executeTestHandler(std::list<QPoint> const& _coordList, std::list<double> const& _sizeList);
     void cibleClicked(int, int);
 
 signals:

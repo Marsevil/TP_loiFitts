@@ -20,6 +20,7 @@ public:
     void finishTest(std::list<qint64> const& times);
 
     std::list<QPoint> points;
+    std::list<double> sizes;
 };
 
 #endif // FITTSCONTROLLER_H
