@@ -22,9 +22,13 @@ public:
 
 private:
 
+private slots:
+    inline void quitButtonHandler() const { emit quit(); }
+    inline void restartButtonHandler() const { emit restart(); }
 
 signals:
-
+    void quit() const;
+    void restart() const;
 };
 
 #endif // GRAPHVIEW_H

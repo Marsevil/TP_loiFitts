@@ -38,14 +38,18 @@ void MainWindow::setTestView()
     TestView* view = new TestView(this);
     setCentralWidget(view);
 
-    connect(view, SIGNAL(startTest(int, int)), this, SLOT(launchTest(int, int)));
-    connect(this, SIGNAL(executeTest(std::list<QPoint>, std::list<double>)), view, SLOT(executeTestHandler(std::list<QPoint>, std::list<double>)));
+    connect(view, SIGNAL(startTest(int,int)), this, SLOT(launchTest(int,int)));
+    connect(this, SIGNAL(executeTest(std::list<QPoint>,std::list<double>)), view, SLOT(executeTestHandler(std::list<QPoint>,std::list<double>)));
     connect(view, SIGNAL(endTest(std::list<qint64>)), this, SLOT(finishTest(std::list<qint64>)));
 }
 
 void MainWindow::setGraphView() {
-    setCentralWidget(new GraphView(model->getConfig(), model->getStats(), this));
+    GraphView* view = new GraphView(model->getConfig(), model->getStats(), this);
+    setCentralWidget(view);
     adjustSize();
+
+    connect(view, SIGNAL(quit()), qApp, SLOT(quit()));
+    connect(view, SIGNAL(restart()), this, SLOT(setTestView()));
 }
 
 void MainWindow::setConfigView() {

@@ -217,4 +217,7 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
 
     QPushButton* restartBtn = new QPushButton("Recommencer", this);
     btnLayout->addWidget(restartBtn);
+
+    connect(leaveBtn, SIGNAL(clicked()), this, SLOT(quitButtonHandler()));
+    connect(restartBtn, SIGNAL(clicked()), this, SLOT(restartButtonHandler()));
 }
