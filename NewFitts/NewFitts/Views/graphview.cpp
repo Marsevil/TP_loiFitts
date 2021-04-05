@@ -19,12 +19,17 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
     titleBox->setLayout(titleBoxLayout);
     mainLayout->addWidget(titleBox);
 
+    QWidget* content = new QWidget(this);
+    QLayout* contentLayout = new QHBoxLayout(content);
+    content->setLayout(contentLayout);
+    mainLayout->addWidget(content);
+
     // Graph
-    QWidget* graphBox = new QWidget(this);
+    QWidget* graphBox = new QWidget(content);
     QLayout* graphBoxLayout = new QVBoxLayout(graphBox);
     graphBox->setLayout(graphBoxLayout);
     graphBoxLayout->setAlignment(Qt::AlignHCenter);
-    mainLayout->addWidget(graphBox);
+    contentLayout->addWidget(graphBox);
 
     // Point x Time graph
     QChartView* plot = new QChartView(graphBox);
@@ -164,11 +169,11 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
     chart->setAxisY(axisY, expSeries);
 
     // Statistiques
-    QWidget* statBox = new QWidget(this);
-    QLayout* statLayout = new QHBoxLayout(statBox);
+    QWidget* statBox = new QWidget(content);
+    QLayout* statLayout = new QVBoxLayout(statBox);
     statBox->setLayout(statLayout);
     statLayout->setAlignment(Qt::AlignHCenter);
-    mainLayout->addWidget(statBox);
+    contentLayout->addWidget(statBox);
 
     // Paramètres utilisés
     QGroupBox* parametreBox = new QGroupBox("Paramètres de l'expérience");

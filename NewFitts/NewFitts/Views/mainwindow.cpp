@@ -8,22 +8,19 @@
 MainWindow::MainWindow(FittsController* _controller, FittsModel const* _model, QWidget *parent)
     : QMainWindow(parent), controller(_controller), model(_model)
 {
-    setConfigView();
+    setTestView();
 
-    QAction* setTest = new QAction("Test View");
-    QAction* setGraph = new QAction("Graph View");
-    QAction* setConfig = new QAction("Config View");
+    QAction* quit = new QAction("Quitter");
+    QAction* settings = new QAction("Options");
     menuBar()->setNativeMenuBar(false);
-    QMenu* viewMenu = menuBar()->addMenu("Views");
-    viewMenu->addAction(setTest);
-    viewMenu->addAction(setConfig);
-    viewMenu->addAction(setGraph);
+    QMenu* viewMenu = menuBar()->addMenu("Fichier");
+    viewMenu->addAction(settings);
+    viewMenu->addAction(quit);
 
-    connect(setTest, SIGNAL(triggered()), this, SLOT(setTestView()));
-    connect(setGraph, SIGNAL(triggered()), this, SLOT(setGraphView()));
-    connect(setConfig, SIGNAL(triggered()), this, SLOT(setConfigView()));
+    connect(quit, SIGNAL(triggered()), qApp, SLOT(quit()));
+    connect(settings, SIGNAL(triggered()), this, SLOT(setConfigView()));
 
-    adjustSize();
+    resize(1280, 720);
 
 }
 
@@ -34,7 +31,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::setTestView()
 {
-    resize(900, 800);
     TestView* view = new TestView(this);
     setCentralWidget(view);
 
@@ -46,7 +42,6 @@ void MainWindow::setTestView()
 void MainWindow::setGraphView() {
     GraphView* view = new GraphView(model->getConfig(), model->getStats(), this);
     setCentralWidget(view);
-    adjustSize();
 
     connect(view, SIGNAL(quit()), qApp, SLOT(quit()));
     connect(view, SIGNAL(restart()), this, SLOT(setTestView()));
@@ -55,7 +50,6 @@ void MainWindow::setGraphView() {
 void MainWindow::setConfigView() {
     ConfigView* view = new ConfigView(model->getConfig(), this);
     setCentralWidget(view);
-    adjustSize();
 
     connect(view, SIGNAL(cancel()), this, SLOT(configCancel()));
     connect(view, SIGNAL(confirm(Config)), this, SLOT(updateConfig(Config)));
