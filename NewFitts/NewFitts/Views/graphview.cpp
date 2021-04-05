@@ -26,6 +26,7 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
     graphBoxLayout->setAlignment(Qt::AlignHCenter);
     mainLayout->addWidget(graphBox);
 
+    // Point x Time graph
     QChartView* plot = new QChartView(graphBox);
     plot->setRenderHint(QPainter::Antialiasing);
     graphBoxLayout->addWidget(plot);
@@ -69,6 +70,97 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
     chart->setAxisX(axis, fittsSeries);
 
     QValueAxis* axisY = new QValueAxis;
+    axisY->setTitleText("temps (en ms)");
+    chart->setAxisY(axisY, expSeries);
+
+    // Distance relative x time.
+    // Il faut ordonné les distances relative.
+    // 1. On fait une copie de chaque liste
+    std::list<double> unorderedTimes = stats.times;
+    std::list<double> unorderedDistances = stats.distances;
+    std::list<double> unorderedSizes = stats.sizes;
+    std::list<double> orderedTimes;
+    std::list<double> orderedRelativeDistance;
+
+    // 2. Tant qu'une des listes n'est pas vide
+    while (!unorderedDistances.empty()) {
+        // 2.a on défini les minimum comme étant le premier élément de chaque liste.
+        std::list<double>::const_iterator lessTime = unorderedTimes.begin();
+        std::list<double>::const_iterator lessDistance = unorderedDistances.begin();
+        std::list<double>::const_iterator lessSize = unorderedSizes.begin();
+
+        // 2.b on défini la distance relative du premier élément.
+        double D = *lessDistance;
+        double L = *lessSize;
+        double lessRelativeD = log(2*D / L);
+
+        // 2.c on défini des itérateur qui parcoureront chacune des liste
+        time = lessTime;
+        distance = lessDistance;
+        size = lessSize;
+        // 2.d on parcours les liste à la recherche de la plus petite distance relative
+        for (std::size_t i = 0; i < unorderedDistances.size(); ++i) {
+            D = *distance;
+            L = *size;
+
+            double relativeD;
+            if (D == 0) relativeD = 0;
+            else relativeD = log(2*D / L);
+
+            if (relativeD < lessRelativeD) {
+                lessRelativeD = relativeD;
+                lessTime = time;
+                lessDistance = distance;
+                lessSize = size;
+            }
+
+            ++distance;
+            ++size;
+            ++time;
+        }
+
+        // 3. On ajoute la plus petite distance relative à nos liste ordonnée
+        orderedRelativeDistance.push_back(lessRelativeD);
+        orderedTimes.push_back(*lessTime);
+
+        // 4. On supprime les éléments ajouté de nos liste original.
+        unorderedTimes.erase(lessTime);
+        unorderedDistances.erase(lessDistance);
+        unorderedSizes.erase(lessSize);
+    }
+
+    // On dessine le graph
+    plot = new QChartView(graphBox);
+    plot->setRenderHint(QPainter::Antialiasing);
+    graphBoxLayout->addWidget(plot);
+    chart = new QChart;
+    plot->setChart(chart);
+    chart->setTitle("Temps en fonction de la distance relative");
+    chart->setAnimationOptions(QChart::AllAnimations);
+    chart->createDefaultAxes();
+    chart->legend()->setVisible(true);
+    chart->legend()->setAlignment(Qt::AlignBottom);
+
+    expSeries = new QLineSeries(chart);
+    axis = new QCategoryAxis(chart);
+
+    time = orderedTimes.begin();
+    distance = orderedRelativeDistance.begin();
+    for (std::size_t i = 0; i < config.nbPoint; ++i) {
+        expSeries->append(*distance, *time);
+
+        axis->append(QString::number(i+1) + "<br/>T: " + QString::number(*time) + "<br/>D: " + QString::number(*distance), i);
+
+        ++time;
+        ++distance;
+    }
+    axis->setLabelsPosition(QCategoryAxis::AxisLabelsPositionOnValue);
+
+    chart->addSeries(expSeries);
+
+    chart->setAxisX(axis, expSeries);
+
+    axisY = new QValueAxis;
     axisY->setTitleText("temps (en ms)");
     chart->setAxisY(axisY, expSeries);
 
