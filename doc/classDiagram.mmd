@@ -1,0 +1,86 @@
+classDiagram
+
+class FittsController {
+    -run() void
+
+    +FittsController(_model : FittsModel)
+    +~FittsController()
+    +updateConfig(_config Config) void
+}
+
+class Config {
+    <<structure>>
+    +a : double
+    +b : double
+    +nbPoint : int
+    +minSize : int
+    +maxSize : int
+}
+
+class Stats {
+    <<structure>>
+    +ecartType : double
+    +erreurType : double
+    +diffMoy : double
+    +itc95 : double
+    +times : list~double~
+    +distances : list~double~
+    +sizes : list~double~
+}
+
+class FittsModel {
+    -config : Config
+    -stats : Stats
+
+    +FittsModel()
+    +getConfig() Config
+    +getStats() Stats
+    +setConfig(_config Config) void
+    +setStats(_stats Stats) void
+}
+
+class ConfigView {
+    -MAX_MIN_RANGE : int = 250
+
+    +ConfigView(_config : Config, parent : QWidget = nullptr)
+    -updateA(_a : double) void
+    -updateB(_b : double) void
+    -updateMinSize(_minSize : int) void
+    -updateMaxSize(_maxSize : int) void
+    -updateNbPoint(_nbPoint : int) void
+    -cancelPressed() void
+    -confirmPressed() void
+}
+
+class GraphView {
+    +GraphView(config : Config, stats : Stats, parent : QWidget = nullptr)
+}
+
+class TestView {
+    +TestView(parent : QWidget = nullptr)
+}
+
+class MainWindow {
+    -configCancel() void
+    -updateConfig(_config : Config) void
+
+    +MainWindow(_controller : FittsController, _model : FittsModel, parent : QWidget = nullptr)
+    +~MainWindow()
+    +setTestView() void
+    +setGraphView() void
+    +setConfigView() void
+}
+
+QWidget <|-- TestView
+QWidget <|-- GraphView
+QWidget <|-- ConfigView
+QMainWindow <|-- MainWindow
+MainWindow "0" -- "1" FittsModel : -model
+MainWindow "1 -controller" -- "1 -view" FittsController
+FittsController "0" -- "1" FittsModel : -model
+TestView <.. MainWindow
+GraphView <.. MainWindow
+ConfigView <.. MainWindow
+Stats *-- FittsModel : -stats
+Config *-- FittsModel : -config
+Config *-- ConfigView : -config
