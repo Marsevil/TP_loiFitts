@@ -1,7 +1,9 @@
 #include "testview.h"
 
+#include <QDebug>
 
-TestView::TestView(QWidget *parent) : QWidget(parent)
+
+TestView::TestView(QWidget *parent) : QWidget(parent), timer(nullptr)
 {
     QVBoxLayout* mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
@@ -29,24 +31,79 @@ TestView::TestView(QWidget *parent) : QWidget(parent)
     QLayout* testBoxLayout = new QVBoxLayout(testBox);
     testBoxLayout->setAlignment(Qt::AlignHCenter);
 
-    QGraphicsView* graphicView = new QGraphicsView;
+    graphicView = new DetectClick;
     testBoxLayout->addWidget(graphicView);
     graphicView->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff);
     graphicView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    QGraphicsScene* scene = new QGraphicsScene;
+    scene = new QGraphicsScene;
     graphicView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
     graphicView->setScene(scene);
-    scene->setSceneRect(0,0,graphicView->width(),300);
+    scene->setSceneRect(0,0,graphicView->width(),graphicView->height());
 
     mainLayout->addWidget(testBox);
 
     // Bouton Start Test
     QLayout* sceneLayout = new QVBoxLayout(graphicView);
-    QPushButton* startButton = new QPushButton("Démarrer le test");
+    startButton = new QPushButton("Démarrer le test");
     sceneLayout->addWidget(startButton);
     sceneLayout->setAlignment(Qt::AlignHCenter);
     startButton->setGeometry(300, 300, 300, 300);
 
+    connect(startButton, SIGNAL(clicked()), this, SLOT(startTestButtonHandler()));
+
+    // Connect with the class detecting mouse click
+    connect(graphicView, SIGNAL(mouseClicked(int,int)), this, SLOT(cibleClicked(int,int)));
+
+}
+
+void TestView::startTestButtonHandler()
+{
+    if (timer) {
+        emit endTest(elapsedTimes);
+    } else {
+        startButton->setVisible(false);
+        emit startTest(scene->width(), scene->height());
+    }
+}
+
+
+void TestView::executeTestHandler(std::list<QPoint> const& _coordList, std::list<double> const& _sizeList)
+{
+    coordList = _coordList;
+    sizeList = _sizeList;
+    showCible();
+    timer = new QElapsedTimer;
+    timer->start();
+}
+
+void TestView::cibleClicked(int x, int y)
+{
+    QPointF coords = graphicView->mapToScene(x,y);
+
+    if (sqrt(pow(coords.x() - coordList.front().x(), 2) + pow(coords.y() - coordList.front().y(), 2)) <= sizeList.front() / 2)
+    {
+        scene->clear();
+        sizeList.pop_front();
+        coordList.pop_front();
+        showCible();
+        elapsedTimes.push_back(timer->elapsed());
+        timer->restart();
+    }
+}
+
+void TestView::showCible()
+{
+    // Récupération de la liste de coordonnées et de tailles de cercle puis affichage à l'écran
+
+    if (coordList.empty() == true) // Si la liste des coordonnées est vide, on a fini le test
+    {
+        startButton->setText("Voir les résultats");
+        startButton->setVisible(true);
+    }
+    else // Sinon on re génère un cercle
+    {
+        scene->addEllipse((coordList.front().x() - ((sizeList.front()) / 2)), coordList.front().y() - ((sizeList.front()) / 2), (sizeList.front()), (sizeList.front()), QPen(QColor("red")), QBrush(QColor("red")));
+    }
 }
 

@@ -14,6 +14,7 @@ SOURCES += \
     Views/configview.cpp \
     Views/graphview.cpp \
     Views/testview.cpp \
+    Views/detectclick.cpp \
     main.cpp \
     Views/mainwindow.cpp
 
@@ -23,7 +24,8 @@ HEADERS += \
     Views/configview.h \
     Views/graphview.h \
     Views/mainwindow.h \
-    Views/testview.h
+    Views/testview.h \
+    Views/detectclick.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

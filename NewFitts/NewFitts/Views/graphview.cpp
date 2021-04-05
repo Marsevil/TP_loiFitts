@@ -19,12 +19,17 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
     titleBox->setLayout(titleBoxLayout);
     mainLayout->addWidget(titleBox);
 
+    QWidget* content = new QWidget(this);
+    QLayout* contentLayout = new QHBoxLayout(content);
+    content->setLayout(contentLayout);
+    mainLayout->addWidget(content);
+
     // Graph
-    QWidget* graphBox = new QWidget(this);
+    QWidget* graphBox = new QWidget(content);
     QLayout* graphBoxLayout = new QVBoxLayout(graphBox);
     graphBox->setLayout(graphBoxLayout);
     graphBoxLayout->setAlignment(Qt::AlignHCenter);
-    mainLayout->addWidget(graphBox);
+    contentLayout->addWidget(graphBox);
 
     // Point x Time graph
     QChartView* plot = new QChartView(graphBox);
@@ -44,22 +49,22 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
     fittsSeries->setName("Courbe théorique");
     QCategoryAxis* axis = new QCategoryAxis(chart);
 
-    std::list<double>::const_iterator time = stats.times.begin();
+    std::list<qint64>::const_iterator time = stats.times.begin();
+    std::list<qint64>::const_iterator fittsTime = stats.fittsTimes.begin();
     std::list<double>::const_iterator distance = stats.distances.begin();
     std::list<double>::const_iterator size = stats.sizes.begin();
     for (std::size_t i = 0; i < config.nbPoint; ++i) {
         expSeries->append(i, *time);
+        fittsSeries->append(i, *fittsTime);
 
-        double D = *distance;
-        double W = *size;
-        double value = (config.a * 1000) + ((config.b * 1000) * log2((D / W) + 1));
-        fittsSeries->append(i, value);
+        qDebug() << *fittsTime;
 
         axis->append(QString::number(i+1) + "<br/>T: " + QString::number(*time) + "<br/>D: " + QString::number(*distance), i);
 
         ++time;
         ++distance;
         ++size;
+        ++fittsTime;
     }
     axis->setLabelsPosition(QCategoryAxis::AxisLabelsPositionOnValue);
 
@@ -76,16 +81,16 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
     // Distance relative x time.
     // Il faut ordonné les distances relative.
     // 1. On fait une copie de chaque liste
-    std::list<double> unorderedTimes = stats.times;
+    std::list<qint64> unorderedTimes = stats.times;
     std::list<double> unorderedDistances = stats.distances;
     std::list<double> unorderedSizes = stats.sizes;
-    std::list<double> orderedTimes;
+    std::list<qint64> orderedTimes;
     std::list<double> orderedRelativeDistance;
 
     // 2. Tant qu'une des listes n'est pas vide
     while (!unorderedDistances.empty()) {
         // 2.a on défini les minimum comme étant le premier élément de chaque liste.
-        std::list<double>::const_iterator lessTime = unorderedTimes.begin();
+        std::list<qint64>::const_iterator lessTime = unorderedTimes.begin();
         std::list<double>::const_iterator lessDistance = unorderedDistances.begin();
         std::list<double>::const_iterator lessSize = unorderedSizes.begin();
 
@@ -138,7 +143,6 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
     chart->setTitle("Temps en fonction de la distance relative");
     chart->setAnimationOptions(QChart::AllAnimations);
     chart->createDefaultAxes();
-    chart->legend()->setVisible(true);
     chart->legend()->setAlignment(Qt::AlignBottom);
 
     expSeries = new QLineSeries(chart);
@@ -149,7 +153,7 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
     for (std::size_t i = 0; i < config.nbPoint; ++i) {
         expSeries->append(*distance, *time);
 
-        axis->append(QString::number(i+1) + "<br/>T: " + QString::number(*time) + "<br/>D: " + QString::number(*distance), i);
+        axis->append("T: " + QString::number(*time) + "<br/>D: " + QString::number(*distance), i);
 
         ++time;
         ++distance;
@@ -165,11 +169,11 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
     chart->setAxisY(axisY, expSeries);
 
     // Statistiques
-    QWidget* statBox = new QWidget(this);
-    QLayout* statLayout = new QHBoxLayout(statBox);
+    QWidget* statBox = new QWidget(content);
+    QLayout* statLayout = new QVBoxLayout(statBox);
     statBox->setLayout(statLayout);
     statLayout->setAlignment(Qt::AlignHCenter);
-    mainLayout->addWidget(statBox);
+    contentLayout->addWidget(statBox);
 
     // Paramètres utilisés
     QGroupBox* parametreBox = new QGroupBox("Paramètres de l'expérience");
@@ -218,4 +222,7 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
 
     QPushButton* restartBtn = new QPushButton("Recommencer", this);
     btnLayout->addWidget(restartBtn);
+
+    connect(leaveBtn, SIGNAL(clicked()), this, SLOT(quitButtonHandler()));
+    connect(restartBtn, SIGNAL(clicked()), this, SLOT(restartButtonHandler()));
 }
