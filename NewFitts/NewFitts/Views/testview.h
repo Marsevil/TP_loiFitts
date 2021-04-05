@@ -27,7 +27,7 @@ class TestView : public QWidget
 
     std::list<QPoint> coordList;
     std::list<double> sizeList;
-    std::list<qint64> times;
+    std::list<qint64> elapsedTimes;
 
     void showCible();
 public:
@@ -40,7 +40,7 @@ private slots:
 
 signals:
     void startTest(int, int) const;
-    void endTest() const;
+    void endTest(std::list<qint64> const&) const;
 };
 
 #endif // TESTVIEW_H

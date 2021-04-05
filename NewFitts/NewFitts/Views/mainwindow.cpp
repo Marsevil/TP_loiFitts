@@ -79,6 +79,7 @@ void MainWindow::launchTest(int _sceneWidth, int _sceneHeight)
     emit executeTest(coordList, sizeList);
 }
 
-void MainWindow::finishTest() {
+void MainWindow::finishTest(std::list<qint64> const& times) {
+    controller->finishTest(times);
     setGraphView();
 }

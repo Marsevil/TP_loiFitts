@@ -47,5 +47,21 @@ void FittsController::launchTest(int _sceneWidth, int _sceneHeight, std::list<QP
         coordList.push_back(coord);
     }
 
+    points = coordList;
+    points.push_front(QPoint(sceneWidth/2, sceneHeight/2));
+}
 
+void FittsController::finishTest(std::list<qint64> const& times) {
+    std::list<double> distances;
+
+    std::list<QPoint>::const_iterator point = points.begin();
+    for (std::size_t i = 0; points.size()-1; ++i) {
+        QPoint P1 = *(point++);
+        QPoint P2 = *(point++);
+
+        distances.push_back(sqrt(pow(P2.x() - P1.x(), 2) + pow(P2.y() - P1.y(), 2)));
+    }
+
+    points.clear();
+    model->setStats({0, 0, 0, 0, times, distances});
 }

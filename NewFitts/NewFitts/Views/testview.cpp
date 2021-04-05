@@ -87,7 +87,7 @@ void TestView::cibleClicked(int x, int y)
         sizeList.pop_front();
         coordList.pop_front();
         showCible();
-        times.push_back(timer->elapsed());
+        elapsedTimes.push_back(timer->elapsed());
         timer->restart();
     }
 }
