@@ -18,8 +18,6 @@ class TestView : public QWidget
 public:
     explicit TestView(QWidget *parent = nullptr);
 
-signals:
-
 };
 
 #endif // TESTVIEW_H

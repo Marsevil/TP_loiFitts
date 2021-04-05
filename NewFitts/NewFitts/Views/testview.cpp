@@ -1,8 +1,5 @@
 #include "testview.h"
 
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QLabel>
 
 TestView::TestView(QWidget *parent) : QWidget(parent)
 {
@@ -27,13 +24,13 @@ TestView::TestView(QWidget *parent) : QWidget(parent)
     mainLayout->addWidget(label);
 
 
-    // Graph
-    QWidget* graphBox = new QWidget(this);
-    QLayout* graphBoxLayout = new QVBoxLayout(graphBox);
-    graphBoxLayout->setAlignment(Qt::AlignHCenter);
+    // Zone de test
+    QWidget* testBox = new QWidget(this);
+    QLayout* testBoxLayout = new QVBoxLayout(testBox);
+    testBoxLayout->setAlignment(Qt::AlignHCenter);
 
     QGraphicsView* graphicView = new QGraphicsView;
-    graphBoxLayout->addWidget(graphicView);
+    testBoxLayout->addWidget(graphicView);
     graphicView->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff);
     graphicView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
@@ -42,7 +39,7 @@ TestView::TestView(QWidget *parent) : QWidget(parent)
     graphicView->setScene(scene);
     scene->setSceneRect(0,0,graphicView->width(),300);
 
-    mainLayout->addWidget(graphBox);
+    mainLayout->addWidget(testBox);
 
     // Bouton Start Test
     QLayout* sceneLayout = new QVBoxLayout(graphicView);
@@ -51,5 +48,5 @@ TestView::TestView(QWidget *parent) : QWidget(parent)
     sceneLayout->setAlignment(Qt::AlignHCenter);
     startButton->setGeometry(300, 300, 300, 300);
 
-
 }
+
