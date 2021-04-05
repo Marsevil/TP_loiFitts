@@ -1,0 +1,12 @@
+stateDiagram-v2
+
+testView : Vue de l'expérience
+configView : Vue de configuration
+resultView : Vue présentant les résultat (graph)
+
+[*] --> testView : démarrage
+testView --> configView : Bouton "paramètre"
+testView --> resultView : Fin de l'expérience
+configView --> testView : Bouton "Valider" ou "Annuler"
+resultView --> testView : Bouton "Recommencer"
+resultView --> [*] : Bouton "Quitter"
