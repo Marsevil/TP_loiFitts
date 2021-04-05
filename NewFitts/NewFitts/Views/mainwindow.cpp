@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 
+#include "../Controllers/fittscontroller.h"
+
 #include <QAction>
 #include <QMenuBar>
 
@@ -30,3 +32,30 @@ MainWindow::~MainWindow()
 
 }
 
+void MainWindow::setTestView() {
+    setCentralWidget(new TestView(this));
+    adjustSize();
+}
+
+void MainWindow::setGraphView() {
+    setCentralWidget(new GraphView(this));
+    adjustSize();
+}
+
+void MainWindow::setConfigView() {
+    ConfigView* view = new ConfigView(model->getConfig(), this);
+    setCentralWidget(view);
+    adjustSize();
+
+    connect(view, SIGNAL(cancel()), this, SLOT(configCancel()));
+    connect(view, SIGNAL(confirm(Config)), this, SLOT(updateConfig(Config)));
+}
+
+void MainWindow::configCancel() {
+    setTestView();
+}
+
+void MainWindow::updateConfig(Config _config) {
+    controller->updateConfig(_config);
+    setTestView();
+}

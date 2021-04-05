@@ -22,8 +22,12 @@ public:
     ~MainWindow();
 
 public slots:
-    inline void setTestView() { setCentralWidget(new TestView); adjustSize(); }
-    inline void setGraphView() { setCentralWidget(new GraphView); adjustSize(); }
-    inline void setConfigView() { setCentralWidget(new ConfigView(model->getConfig(), controller)); adjustSize(); }
+    void setTestView();
+    void setGraphView();
+    void setConfigView();
+
+private slots:
+    void configCancel();
+    void updateConfig(Config);
 };
 #endif // MAINWINDOW_H
