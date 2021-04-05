@@ -38,21 +38,34 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
 
     QLineSeries* expSeries = new QLineSeries(chart);
     expSeries->setName("Courbe expérimental");
+    QLineSeries* fittsSeries = new QLineSeries(chart);
+    fittsSeries->setName("Courbe théorique");
     QCategoryAxis* axis = new QCategoryAxis(chart);
 
     std::list<double>::const_iterator time = stats.times.begin();
+    std::list<double>::const_iterator distance = stats.distances.begin();
+    std::list<double>::const_iterator size = stats.sizes.begin();
     for (std::size_t i = 0; i < config.nbPoint; ++i) {
         expSeries->append(i, *time);
 
-        axis->append(QString::number(i+1) + "<br/>T: " + QString::number(*time), i);
+        double D = *distance;
+        double W = *size;
+        double value = (config.a * 1000) + ((config.b * 1000) * log2((D / W) + 1));
+        fittsSeries->append(i, value);
+
+        axis->append(QString::number(i+1) + "<br/>T: " + QString::number(*time) + "<br/>D: " + QString::number(*distance), i);
 
         ++time;
+        ++distance;
+        ++size;
     }
     axis->setLabelsPosition(QCategoryAxis::AxisLabelsPositionOnValue);
 
     chart->addSeries(expSeries);
+    chart->addSeries(fittsSeries);
 
     chart->setAxisX(axis, expSeries);
+    chart->setAxisX(axis, fittsSeries);
 
     QValueAxis* axisY = new QValueAxis;
     axisY->setTitleText("temps (en ms)");
