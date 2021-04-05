@@ -50,21 +50,21 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
     QCategoryAxis* axis = new QCategoryAxis(chart);
 
     std::list<qint64>::const_iterator time = stats.times.begin();
+    std::list<qint64>::const_iterator fittsTime = stats.fittsTimes.begin();
     std::list<double>::const_iterator distance = stats.distances.begin();
     std::list<double>::const_iterator size = stats.sizes.begin();
     for (std::size_t i = 0; i < config.nbPoint; ++i) {
         expSeries->append(i, *time);
+        fittsSeries->append(i, *fittsTime);
 
-        double D = *distance;
-        double W = *size;
-        double value = (config.a * 1000) + ((config.b * 1000) * log2((D / W) + 1));
-        fittsSeries->append(i, value);
+        qDebug() << *fittsTime;
 
         axis->append(QString::number(i+1) + "<br/>T: " + QString::number(*time) + "<br/>D: " + QString::number(*distance), i);
 
         ++time;
         ++distance;
         ++size;
+        ++fittsTime;
     }
     axis->setLabelsPosition(QCategoryAxis::AxisLabelsPositionOnValue);
 

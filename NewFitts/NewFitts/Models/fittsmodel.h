@@ -18,6 +18,7 @@ struct Stats {
     double diffMoy;
     double itc95;
     std::list<qint64> times;
+    std::list<qint64> fittsTimes;
     std::list<double> distances;
     std::list<double> sizes;
 };
