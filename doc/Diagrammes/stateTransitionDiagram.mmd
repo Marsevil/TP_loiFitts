@@ -4,9 +4,11 @@ testView : Vue de l'expérience
 configView : Vue de configuration
 resultView : Vue présentant les résultat (graph)
 
-[*] --> testView : démarrage
-testView --> configView : Bouton "paramètre"
+[*] --> testView : Démarrage
+testView --> configView : Bouton "Paramètres"
 testView --> resultView : Fin de l'expérience
+testView --> [*] : Bouton "Quitter"
 configView --> testView : Bouton "Valider" ou "Annuler"
+configView --> [*] : Bouton "Quitter"
 resultView --> testView : Bouton "Recommencer"
 resultView --> [*] : Bouton "Quitter"
