@@ -16,6 +16,7 @@ public:
 
     void cancelConfig() const;
     void updateConfig(Config _config) const;
+    void launchTest(int _sceneWidth, int _sceneHeight, std::list<QPoint>& coordList, std::list<double>& sizeList);
 };
 
 #endif // FITTSCONTROLLER_H

@@ -32,9 +32,14 @@ MainWindow::~MainWindow()
 
 }
 
-void MainWindow::setTestView() {
-    setCentralWidget(new TestView(this));
+void MainWindow::setTestView()
+{
+    TestView* view = new TestView(this);
+    setCentralWidget(view);
     adjustSize();
+
+    connect(view, SIGNAL(startTest(int, int)), this, SLOT(launchTest(int, int)));
+    connect(this, SIGNAL(executeTest(std::list<QPoint>, std::list<double>)), view, SLOT(executeTestHandler(std::list<QPoint>, std::list<double>)));
 }
 
 void MainWindow::setGraphView() {
@@ -58,4 +63,17 @@ void MainWindow::configCancel() {
 void MainWindow::updateConfig(Config _config) {
     controller->updateConfig(_config);
     setTestView();
+}
+
+void MainWindow::launchTest(int _sceneWidth, int _sceneHeight)
+{
+    // Génération de listes vides de points et de tailles de cercle
+    std::list<QPoint> coordList;
+    std::list<double> sizeList;
+
+    // Requête au contrôleur pour remplir les listes
+    controller->launchTest(_sceneWidth, _sceneHeight, coordList, sizeList);
+
+    // Envoi des listes à la TestView
+    emit executeTest(coordList, sizeList);
 }

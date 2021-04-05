@@ -29,5 +29,9 @@ public slots:
 private slots:
     void configCancel();
     void updateConfig(Config);
+    void launchTest(int _sceneWidth, int _sceneHeight);
+
+signals:
+    void executeTest(std::list<QPoint>, std::list<double>) const;
 };
 #endif // MAINWINDOW_H
