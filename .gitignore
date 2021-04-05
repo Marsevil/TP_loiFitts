@@ -36,6 +36,7 @@
 
 # Qt creator files
 srcs/Fitts.pro.user
+NewFitts/NewFitts/NewFitts.pro.user
 
 # MacOS
 *.DS_Store*

@@ -31,3 +31,15 @@
 - Les classes ne doivent plus être `friend` entre elles.
 
 - Les classes doivent utiliser des accesseurs pour récupérer les données.
+
+## 3. Repenser l'interface
+
+### Model
+
+- Sauvegarde des paramètres sur le disque pour éviter de devoir les re sélectionner à chaque lancement de l'application.
+
+### Contrôleur
+
+### Vue
+
+- L'accès aux paramètres devrait être demandé par l'utilisateur.
