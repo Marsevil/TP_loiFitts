@@ -20,7 +20,12 @@ class TestView : public QWidget
     QGraphicsScene* scene;
     QPushButton* startButton;
     QGraphicsEllipseItem* ellipse;
+    DetectClick* graphicView;
 
+    std::list<QPoint> coordList;
+    std::list<double> sizeList;
+
+    void showCible();
 public:
     explicit TestView(QWidget *parent = nullptr);
 

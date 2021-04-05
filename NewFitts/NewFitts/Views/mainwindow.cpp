@@ -34,9 +34,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::setTestView()
 {
+    resize(900, 800);
     TestView* view = new TestView(this);
     setCentralWidget(view);
-    adjustSize();
 
     connect(view, SIGNAL(startTest(int, int)), this, SLOT(launchTest(int, int)));
     connect(this, SIGNAL(executeTest(std::list<QPoint>, std::list<double>)), view, SLOT(executeTestHandler(std::list<QPoint>, std::list<double>)));
