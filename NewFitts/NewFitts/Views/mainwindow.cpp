@@ -44,7 +44,7 @@ void MainWindow::setTestView()
 }
 
 void MainWindow::setGraphView() {
-    setCentralWidget(new GraphView(this));
+    setCentralWidget(new GraphView(model->getConfig(), model->getStats(), this));
     adjustSize();
 }
 

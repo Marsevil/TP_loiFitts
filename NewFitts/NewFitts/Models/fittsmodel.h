@@ -19,6 +19,7 @@ struct Stats {
     double itc95;
     std::list<qint64> times;
     std::list<double> distances;
+    std::list<double> sizes;
 };
 
 class FittsModel

@@ -21,9 +21,8 @@
 
 QT_CHARTS_USE_NAMESPACE
 
-FittsController::FittsController(FittsView *fittsView, FittsModel *fittsModel) {
-    this->fittsModel = fittsModel;
-    this->fittsView = fittsView;
+FittsController::FittsController(FittsModel* _fittsModel) : fittsModel(_fittsModel), fittsView(nullptr) {
+    fittsView = new FittsView(this, fittsModel);
     this->start();
 }
 
@@ -32,15 +31,15 @@ void FittsController::start() {
 }
 
 void FittsController::startSimulation() {
-    this->fittsView->mainStack->setCurrentIndex(1);
-    this->fittsModel->cibleLeft = this->fittsModel->nbCible;
+    this->fittsView->setMainStackIndex(1);
+    this->fittsModel->setCibleLeft(this->fittsModel->getNbCible());
     this->fittsView->updateTestMsg();
-    this->fittsView->resultBtn->setEnabled(false);
-    this->fittsView->graphicView->setEnabled(true);
-    this->fittsModel->cercleSize.clear();
-    this->fittsModel->cercleCenter.clear();
-    this->fittsModel->clickPoints.clear();
-    this->fittsModel->times.clear();
+    this->fittsView->setResultButtonEnabled(false);
+    this->fittsView->setGraphicViewEnabled(true);
+    this->fittsModel->clearCercleSize();
+    this->fittsModel->clearCercleCenter();
+    this->fittsModel->clearClickPoints();
+    this->fittsModel->clearTimes();
 
     this->initGame();
 }
@@ -50,81 +49,81 @@ void FittsController::quit() {
 }
 
 void FittsController::backToSettings() {
-    this->fittsView->mainStack->setCurrentIndex(0);
+    this->fittsView->setMainStackIndex(0);
 }
 void FittsController::resultClicked() {
-    this->fittsView->mainStack->setCurrentIndex(2);
+    this->fittsView->setMainStackIndex(2);
 
     this->calculateResult();
 }
 void FittsController::aValueChanged(double value) {
-    this->fittsModel->a = value;
+    this->fittsModel->setA(value);
 }
 void FittsController::bValueChanged(double value) {
-    this->fittsModel->b = value;
+    this->fittsModel->setB(value);
 }
 void FittsController::nbCibleChanged(int value) {
-    this->fittsModel->nbCible = value;
+    this->fittsModel->setNbCible(value);
 }
 void FittsController::minSizeChanged(int value) {
-    this->fittsModel->minSize = value;
+    this->fittsModel->setMinSize(value);
 }
 void FittsController::maxSizeChanged(int value) {
-    this->fittsModel->maxSize = value;
+    this->fittsModel->setMaxSize(value);
 }
 void FittsController::cibleClicked(int x, int y) {
-    if(this->fittsModel->cercleCenter.isEmpty()) {
+    if(this->fittsModel->getCercleCenter().isEmpty()) {
         // Si vide alors premier click, on demarre le timer
         this->timer = new QElapsedTimer;
         timer->start();
 
         // On démarre avec la première cible
-        this->fittsModel->clickPoints.append(QPoint(x,y));
+        this->fittsModel->appendClickPoints(QPoint(x,y));
         this->nextCible();
     }
     else {
-        QPointF coords = this->fittsView->graphicView->mapToScene(x,y);
-        if(sqrt(pow(coords.x() - this->fittsModel->cercleCenter.last().x(),2) + pow(coords.y() - this->fittsModel->cercleCenter.last().y(),2)) <= this->fittsModel->cercleSize.last() / 2) {
+        QPointF coords = this->fittsView->getGraphicViewMapToScene(x,y);
+        if(sqrt(pow(coords.x() - this->fittsModel->getCercleCenter().last().x(),2) + pow(coords.y() - this->fittsModel->getCercleCenter().last().y(),2)) <= this->fittsModel->getCercleSize().last() / 2) {
             // On stock le temps de click
-            this->fittsModel->times.append(timer->elapsed());
+            this->fittsModel->appendTimes(timer->elapsed());
             // On restart le chrono
             timer->restart();
 
             // On stock la position du click
-            this->fittsModel->clickPoints.append(QPoint(x,y));
+            this->fittsModel->appendClickPoints(QPoint(x,y));
             this->nextCible();
         }
     }
 }
 
 void FittsController::nextCible() {
-    if(!this->fittsModel->cercleCenter.isEmpty())
-        this->fittsModel->cibleLeft--;
+    if(!this->fittsModel->getCercleCenter().isEmpty())
+        this->fittsModel->setCibleLeft(this->fittsModel->getCibleLeft() - 1);
     this->fittsView->updateTestMsg();
 
-    QGraphicsScene *scene = this->fittsView->scene;
+    QGraphicsScene *scene = this->fittsView->getScene();
     scene->clear();
 
     // On stop si c'est finis
-    if(this->fittsModel->cibleLeft == 0) {
+    if(this->fittsModel->getCibleLeft() == 0) {
         this->finish();
         return;
     }
 
     // On génère la taille du cercle rouge
     // qrand() % ((high + 1) - low) + low;
-    int size = qrand() % ((this->fittsModel->maxSize + 1) - this->fittsModel->minSize) + this->fittsModel->minSize;
+    int size = qrand() % ((this->fittsModel->getMaxSize() + 1) - this->fittsModel->getMinSize()) + this->fittsModel->getMinSize();
     // Car on veut le rayon
     // On place le cercle dans la scene (Attention faut pas qu'il soit en dehors du cadre)
-    int sceneW = int(this->fittsView->scene->width());
-    int sceneH = int(this->fittsView->scene->height());
+    int sceneW = int(scene->width());
+    int sceneH = int(scene->height());
 
     qreal posX = qrand() % ((sceneW - size) - size) + size;
     qreal posY = qrand() % ((sceneH - size) - size) + size;
 
     // On stock les infos sur le cercle
-    this->fittsModel->cercleCenter.append(QPoint(int(posX),int(posY)));
-    this->fittsModel->cercleSize.append(size);
+    this->fittsModel->appendCercleCenter(QPoint(int(posX),int(posY)));
+    this->fittsModel->appendCercleSize(size);
 
     // On place le cercle
     scene->addEllipse(posX - (size / 2), posY - (size / 2), size, size, QPen(QColor("red")),QBrush(QColor("red")));
@@ -132,19 +131,19 @@ void FittsController::nextCible() {
 
 
 void FittsController::finish() {
-    this->fittsView->graphicView->setEnabled(false);
-    this->fittsView->resultBtn->setEnabled(true);
+    this->fittsView->setGraphicViewEnabled(false);
+    this->fittsView->setResultButtonEnabled(true);
 }
 
 void FittsController::initGame() {
-    QGraphicsScene *scene = this->fittsView->scene;
+    QGraphicsScene *scene = this->fittsView->getScene();
     scene->clear();
 
-    if(this->fittsModel->maxSize >= this->fittsView->graphicView->width() / 2)
-        this->fittsModel->maxSize = this->fittsView->graphicView->width() / 2;
+    if(this->fittsModel->getMaxSize() >= this->fittsView->getGraphicViewWidth() / 2)
+        this->fittsModel->setMaxSize(this->fittsView->getGraphicViewWidth() / 2);
 
-    if(this->fittsModel->maxSize >= this->fittsView->graphicView->height() / 2)
-        this->fittsModel->maxSize = this->fittsView->graphicView->height() / 2;
+    if(this->fittsModel->getMaxSize() >= this->fittsView->getGraphicViewHeight() / 2)
+        this->fittsModel->setMaxSize(this->fittsView->getGraphicViewHeight() / 2);
 
     qreal posX = scene->width() / 2;
     qreal posY = scene->height() / 2;
@@ -155,8 +154,9 @@ void FittsController::initGame() {
 
 void FittsController::calculateResult() {
     QChart *chart = new QChart;
-    this->fittsView->plot->setChart(chart);
-    this->fittsView->plot->setRenderHint(QPainter::Antialiasing);
+
+    this->fittsView->setPlotChart(chart);
+    this->fittsView->setPlotRenderHint(QPainter::Antialiasing);
     chart->setTitle("Résultats loi Fitts");
     chart->setAnimationOptions(QChart::AllAnimations);
     chart->createDefaultAxes();
@@ -171,13 +171,13 @@ void FittsController::calculateResult() {
 
     QList<double> fittsValues;
 
-    for(int i = 0; i < this->fittsModel->nbCible; ++i) {
-        double T = this->fittsModel->times[i];
+    for(int i = 0; i < this->fittsModel->getNbCible(); ++i) {
+        double T = this->fittsModel->getTimes()[i];
         expSeries->append(i,T);
-        double D = sqrt(pow(this->fittsModel->clickPoints[i].x() - this->fittsModel->cercleCenter[i].x(),2) + pow(this->fittsModel->clickPoints[i].y() - this->fittsModel->cercleCenter[i].y(),2));
+        double D = sqrt(pow(this->fittsModel->getClickPoints()[i].x() - this->fittsModel->getCercleCenter()[i].x(),2) + pow(this->fittsModel->getClickPoints()[i].y() - this->fittsModel->getCercleCenter()[i].y(),2));
 
         // On multiplie par 100 pour être en ms
-        double value = (this->fittsModel->a * 1000) + ((this->fittsModel->b * 1000) * log2((D / this->fittsModel->cercleSize[i]) + 1));
+        double value = (this->fittsModel->getA() * 1000) + ((this->fittsModel->getB() * 1000) * log2((D / this->fittsModel->getCercleSize()[i]) + 1));
         fittsValues.append(value);
         fittsSeries->append(i,value);
 
@@ -203,13 +203,13 @@ void FittsController::calculateResult() {
     double diffMoy = 0;
 
     for (int i = 0; i < fittsValues.size(); ++i) {
-        diffValues.append(fabs(fittsValues[i] - this->fittsModel->times[i]));
-        diffMoy += fabs(fittsValues[i] - this->fittsModel->times[i]);
+        diffValues.append(fabs(fittsValues[i] - this->fittsModel->getTimes()[i]));
+        diffMoy += fabs(fittsValues[i] - this->fittsModel->getTimes()[i]);
     }
     diffMoy /= fittsValues.size();
 
     // On stock la difference de moyenne
-    this->fittsModel->diffMoy = fabs(diffMoy);
+    this->fittsModel->setDiffMoy(fabs(diffMoy));
 
 
     // Ecart type
@@ -223,12 +223,12 @@ void FittsController::calculateResult() {
     double ecartType = sqrt(variance);
 
     // On stock l'ecart type
-    this->fittsModel->ecartType = ecartType;
+    this->fittsModel->setEcartType(ecartType);
     // On stock l'erreur type
-    this->fittsModel->erreurType = fabs(ecartType / sqrt(fittsValues.size()));
+    this->fittsModel->setErreurType(fabs(ecartType / sqrt(fittsValues.size())));
 
     // On stock itc 95%
-    this->fittsModel->itc95 = 2 * this->fittsModel->erreurType;
+    this->fittsModel->setItc95(2 * this->fittsModel->getErreurType());
 
     this->fittsView->displayResults();
 }
