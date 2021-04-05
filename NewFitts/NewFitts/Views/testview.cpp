@@ -3,7 +3,7 @@
 #include <QDebug>
 
 
-TestView::TestView(QWidget *parent) : QWidget(parent)
+TestView::TestView(QWidget *parent) : QWidget(parent), timer(nullptr)
 {
     QVBoxLayout* mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
@@ -59,8 +59,12 @@ TestView::TestView(QWidget *parent) : QWidget(parent)
 
 void TestView::startTestButtonHandler()
 {
-    startButton->setVisible(false);
-    emit startTest(scene->width(), scene->height());
+    if (timer) {
+        emit endTest();
+    } else {
+        startButton->setVisible(false);
+        emit startTest(scene->width(), scene->height());
+    }
 }
 
 
@@ -69,6 +73,8 @@ void TestView::executeTestHandler(std::list<QPoint> _coordList, std::list<double
     coordList = _coordList;
     sizeList = _sizeList;
     showCible();
+    timer = new QElapsedTimer;
+    timer->start();
 }
 
 void TestView::cibleClicked(int x, int y)
@@ -81,6 +87,8 @@ void TestView::cibleClicked(int x, int y)
         sizeList.pop_front();
         coordList.pop_front();
         showCible();
+        times.push_back(timer->elapsed());
+        timer->restart();
     }
 }
 

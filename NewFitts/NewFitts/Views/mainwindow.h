@@ -30,6 +30,7 @@ private slots:
     void configCancel();
     void updateConfig(Config);
     void launchTest(int _sceneWidth, int _sceneHeight);
+    void finishTest();
 
 signals:
     void executeTest(std::list<QPoint>, std::list<double>) const;

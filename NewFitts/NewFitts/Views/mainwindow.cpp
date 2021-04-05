@@ -40,6 +40,7 @@ void MainWindow::setTestView()
 
     connect(view, SIGNAL(startTest(int, int)), this, SLOT(launchTest(int, int)));
     connect(this, SIGNAL(executeTest(std::list<QPoint>, std::list<double>)), view, SLOT(executeTestHandler(std::list<QPoint>, std::list<double>)));
+    connect(view, SIGNAL(endTest()), this, SLOT(finishTest()));
 }
 
 void MainWindow::setGraphView() {
@@ -76,4 +77,8 @@ void MainWindow::launchTest(int _sceneWidth, int _sceneHeight)
 
     // Envoi des listes à la TestView
     emit executeTest(coordList, sizeList);
+}
+
+void MainWindow::finishTest() {
+    setGraphView();
 }

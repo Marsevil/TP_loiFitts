@@ -22,8 +22,12 @@ class TestView : public QWidget
     QGraphicsEllipseItem* ellipse;
     DetectClick* graphicView;
 
+    QElapsedTimer* timer;
+    QPointF firstClick;
+
     std::list<QPoint> coordList;
     std::list<double> sizeList;
+    std::list<qint64> times;
 
     void showCible();
 public:
@@ -36,6 +40,7 @@ private slots:
 
 signals:
     void startTest(int, int) const;
+    void endTest() const;
 };
 
 #endif // TESTVIEW_H
