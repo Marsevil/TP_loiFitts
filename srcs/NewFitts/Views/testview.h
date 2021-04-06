@@ -41,6 +41,7 @@ private slots:
 signals:
     void startTest(int, int) const;
     void endTest(std::list<qint64> const&) const;
+    void updateLabel(QString);
 };
 
 #endif // TESTVIEW_H
