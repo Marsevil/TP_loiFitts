@@ -23,7 +23,6 @@ TestView::TestView(QWidget *parent) : QWidget(parent), timer(nullptr)
     label->setAlignment(Qt::AlignHCenter);
     mainLayout->addWidget(label);
 
-
     // Zone de test
     QWidget* testBox = new QWidget(this);
     QLayout* testBoxLayout = new QVBoxLayout(testBox);
@@ -49,10 +48,9 @@ TestView::TestView(QWidget *parent) : QWidget(parent), timer(nullptr)
     startButton->setGeometry(300, 300, 300, 300);
 
     connect(startButton, SIGNAL(clicked()), this, SLOT(startTestButtonHandler()));
-
     // Connect with the class detecting mouse click
     connect(graphicView, SIGNAL(mouseClicked(int,int)), this, SLOT(cibleClicked(int,int)));
-
+    connect(this, SIGNAL(updateLabel(QString)), label, SLOT(setText(QString)));
 }
 
 void TestView::startTestButtonHandler()
@@ -94,13 +92,15 @@ void TestView::showCible()
 {
     // Récupération de la liste de coordonnées et de tailles de cercle puis affichage à l'écran
 
-    if (coordList.empty() == true) // Si la liste des coordonnées est vide, on a fini le test
+    if (coordList.empty()) // Si la liste des coordonnées est vide, on a fini le test
     {
+        emit updateLabel("Vous pouvez consulter les résultats en cliquant sur le bouton \"Voir les résultats\"");
         startButton->setText("Voir les résultats");
         startButton->setVisible(true);
     }
     else // Sinon on re génère un cercle
     {
+        emit updateLabel("Il reste <font color='red'>" + QString::number(coordList.size()) + "</font> cible(s)");
         scene->addEllipse((coordList.front().x() - ((sizeList.front()) / 2)), coordList.front().y() - ((sizeList.front()) / 2), (sizeList.front()), (sizeList.front()), QPen(QColor("red")), QBrush(QColor("red")));
     }
 }
