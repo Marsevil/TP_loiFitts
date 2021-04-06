@@ -1,7 +1,5 @@
 #include "fittsmodel.h"
 
-#include <QDebug>
-
 QSettings FittsModel::DISK("NewFitts", "config");
 
 FittsModel::FittsModel()

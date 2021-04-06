@@ -1,7 +1,5 @@
 #include "testview.h"
 
-#include <QDebug>
-
 
 TestView::TestView(QWidget *parent) : QWidget(parent), timer(nullptr)
 {

@@ -74,6 +74,7 @@ class MainWindow {
 QWidget <|-- TestView
 QWidget <|-- GraphView
 QWidget <|-- ConfigView
+QGraphicsView <|-- DetectClick
 QMainWindow <|-- MainWindow
 MainWindow "0" -- "1" FittsModel : -model
 MainWindow "1 -controller" -- "1 -view" FittsController
@@ -81,6 +82,7 @@ FittsController "0" -- "1" FittsModel : -model
 TestView <.. MainWindow
 GraphView <.. MainWindow
 ConfigView <.. MainWindow
+TestView ..> DetectClick
 Stats *-- FittsModel : -stats
 Config *-- FittsModel : -config
 Config *-- ConfigView : -config

@@ -1,6 +1,5 @@
 #include "graphview.h"
 
-#include <QDebug>
 
 GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) : QWidget(parent)
 {

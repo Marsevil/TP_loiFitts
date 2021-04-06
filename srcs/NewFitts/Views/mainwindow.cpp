@@ -1,9 +1,5 @@
 #include "mainwindow.h"
-
 #include "../Controllers/fittscontroller.h"
-
-#include <QAction>
-#include <QMenuBar>
 
 MainWindow::MainWindow(FittsController* _controller, FittsModel const* _model, QWidget *parent)
     : QMainWindow(parent), controller(_controller), model(_model)
