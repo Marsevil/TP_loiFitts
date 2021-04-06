@@ -3,6 +3,7 @@
 
 #include <list>
 #include <QDebug>
+#include <QSettings>
 
 struct Config {
     double a;
@@ -27,9 +28,11 @@ class FittsModel
 {
     Config config;
     Stats stats;
+    static QSettings DISK;
 
 public:
     FittsModel();
+    ~FittsModel();
 
     inline Config const& getConfig() const { return config; }
     inline Stats const& getStats() const { return stats; }
