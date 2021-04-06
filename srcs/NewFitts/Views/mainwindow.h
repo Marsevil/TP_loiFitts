@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QAction>
+#include <QMenuBar>
 
 #include "testview.h"
 #include "graphview.h"
