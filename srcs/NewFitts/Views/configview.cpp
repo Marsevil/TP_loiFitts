@@ -133,6 +133,8 @@ ConfigView::ConfigView(Config _config, QWidget *parent)
     QPushButton* confirm = new QPushButton("Valider", buttons);
     buttonsLayout->addWidget(confirm);
 
+    setMaximumWidth(800);
+
     connect(aSelector, SIGNAL(valueChanged(double)), this, SLOT(updateA(double)));
     connect(bSelector, SIGNAL(valueChanged(double)), this, SLOT(updateB(double)));
     connect(nbTargetsSelector, SIGNAL(valueChanged(int)), this, SLOT(updateNbPoint(int)));

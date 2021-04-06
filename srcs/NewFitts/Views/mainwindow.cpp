@@ -20,8 +20,7 @@ MainWindow::MainWindow(FittsController* _controller, FittsModel const* _model, Q
     connect(quit, SIGNAL(triggered()), qApp, SLOT(quit()));
     connect(settings, SIGNAL(triggered()), this, SLOT(setConfigView()));
 
-    resize(1280, 720);
-
+    setWindowState(Qt::WindowMaximized);
 }
 
 MainWindow::~MainWindow()
@@ -49,6 +48,8 @@ void MainWindow::setGraphView() {
 
 void MainWindow::setConfigView() {
     ConfigView* view = new ConfigView(model->getConfig(), this);
+    view->move(width()/2 - view->width()/2, height()/2 - view->height()/2);
+
     setCentralWidget(view);
 
     connect(view, SIGNAL(cancel()), this, SLOT(configCancel()));
