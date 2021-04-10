@@ -44,7 +44,6 @@ void MainWindow::setGraphView() {
 
 void MainWindow::setConfigView() {
     ConfigView* view = new ConfigView(model->getConfig(), this);
-    view->move(width()/2 - view->width()/2, height()/2 - view->height()/2);
 
     setCentralWidget(view);
 
