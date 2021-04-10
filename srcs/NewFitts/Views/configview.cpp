@@ -3,8 +3,18 @@
 ConfigView::ConfigView(Config _config, QWidget *parent)
     : QWidget(parent), config(_config)
 {
-    QLayout* mainLayout = new QVBoxLayout;
+    QLayout* mainLayout = new QHBoxLayout;
     setLayout(mainLayout);
+
+    //QWidget* centeredWidget = new QWidget;
+    //centeredWidget->setMaximumWidth(800);
+    QLayout* centeredLayout = new QVBoxLayout;
+    //centeredLayout->addWidget(centeredWidget);
+    centeredLayout->setAlignment(Qt::AlignHCenter);
+
+    //mainLayout->addWidget(centeredWidget);
+    mainLayout->addItem(centeredLayout);
+
 
     // Titre
     QWidget* titleBox = new QWidget(this);
@@ -15,7 +25,9 @@ ConfigView::ConfigView(Config _config, QWidget *parent)
     QFont titleFont("Calibri", 20, QFont::Bold);
     title->setFont(titleFont);
     titleBoxLayout->addWidget(title);
-    mainLayout->addWidget(titleBox);
+
+    centeredLayout->addWidget(titleBox);
+
 
     // Formule
     QWidget* formulaBox = new QWidget(this);
@@ -24,7 +36,8 @@ ConfigView::ConfigView(Config _config, QWidget *parent)
     formulaBox->setLayout(formulaBoxLayout);
     QSvgWidget* formula = new QSvgWidget("./fittsFormula.svg", formulaBox);
     formulaBoxLayout->addWidget(formula);
-    mainLayout->addWidget(formulaBox);
+
+    centeredLayout->addWidget(formulaBox);
 
     QFont font("Calibri", 15, QFont::Bold);
 
@@ -32,7 +45,8 @@ ConfigView::ConfigView(Config _config, QWidget *parent)
     QWidget* userSide = new QWidget(this);
     QLayout* userSideLayout = new QHBoxLayout(userSide);
     userSide->setLayout(userSideLayout);
-    mainLayout->addWidget(userSide);
+
+    centeredLayout->addWidget(userSide);
 
     // Paramètre de la formule
     QGroupBox* formulaSettings = new QGroupBox("Paramètre de la formule :", this);
@@ -125,15 +139,14 @@ ConfigView::ConfigView(Config _config, QWidget *parent)
 
     // Boutons
     QWidget* buttons = new QWidget(this);
-    mainLayout->addWidget(buttons);
+    centeredLayout->addWidget(buttons);
+
     QLayout* buttonsLayout = new QHBoxLayout(buttons);
     buttons->setLayout(buttonsLayout);
     QPushButton* cancel = new QPushButton("Annuler", buttons);
     buttonsLayout->addWidget(cancel);
     QPushButton* confirm = new QPushButton("Valider", buttons);
     buttonsLayout->addWidget(confirm);
-
-    setMaximumWidth(800);
 
     connect(aSelector, SIGNAL(valueChanged(double)), this, SLOT(updateA(double)));
     connect(bSelector, SIGNAL(valueChanged(double)), this, SLOT(updateB(double)));
@@ -143,4 +156,5 @@ ConfigView::ConfigView(Config _config, QWidget *parent)
 
     connect(cancel, SIGNAL(clicked()), this, SLOT(cancelPressed()));
     connect(confirm, SIGNAL(clicked()), this, SLOT(confirmPressed()));
+
 }

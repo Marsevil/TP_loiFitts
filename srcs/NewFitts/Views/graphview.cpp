@@ -56,8 +56,6 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
         expSeries->append(i, *time);
         fittsSeries->append(i, *fittsTime);
 
-        qDebug() << *fittsTime;
-
         axis->append(QString::number(i+1) + "<br/>T: " + QString::number(*time) + "<br/>D: " + QString::number(*distance), i);
 
         ++time;
@@ -93,16 +91,16 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
         std::list<double>::const_iterator lessDistance = unorderedDistances.begin();
         std::list<double>::const_iterator lessSize = unorderedSizes.begin();
 
-        // 2.b on défini la distance relative du premier élément.
+        // 2.b On défini la distance relative du premier élément.
         double D = *lessDistance;
         double L = *lessSize;
         double lessRelativeD = log(2*D / L);
 
-        // 2.c on défini des itérateur qui parcoureront chacune des liste
+        // 2.c On défini des itérateurs qui parcoureront chacune des listes
         time = lessTime;
         distance = lessDistance;
         size = lessSize;
-        // 2.d on parcours les liste à la recherche de la plus petite distance relative
+        // 2.d On parcours les listes à la recherche de la plus petite distance relative
         for (std::size_t i = 0; i < unorderedDistances.size(); ++i) {
             D = *distance;
             L = *size;
@@ -123,11 +121,11 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
             ++time;
         }
 
-        // 3. On ajoute la plus petite distance relative à nos liste ordonnée
+        // 3. On ajoute la plus petite distance relative à nos liste ordonnées
         orderedRelativeDistance.push_back(lessRelativeD);
         orderedTimes.push_back(*lessTime);
 
-        // 4. On supprime les éléments ajouté de nos liste original.
+        // 4. On supprime les éléments ajouté de nos liste originales.
         unorderedTimes.erase(lessTime);
         unorderedDistances.erase(lessDistance);
         unorderedSizes.erase(lessSize);
@@ -164,7 +162,7 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
     chart->setAxisX(axis, expSeries);
 
     axisY = new QValueAxis;
-    axisY->setTitleText("temps (en ms)");
+    axisY->setTitleText("Temps (en ms)");
     chart->setAxisY(axisY, expSeries);
 
     // Statistiques
