@@ -1,5 +1,27 @@
 # Rapport de TP - Loi de Fitts
 
+
+
+Les diagrammes au format SVG inclus dans ce rapport ont été réalisés avec l'éditeur `Mermaid`, et le rapport lui-même a été écrit et généré en markdown grâce à l'éditeur `MarkText`. 
+
+
+
+****L'archive du TP contient**** :
+
+    - Un répertoire `doc` contenant les diagrammes, captures d'écan de l'application et le rapport
+
+    - Un répertoire `srcs` contenant un sous-répertoire `OldFitts` qui correspond à la version originale de l'application, retravaillée par nos soins pour mieux coller à l'architecture MVC, ainsi qu'un répertoire `NewFitts` correspondant à notre application construite à partir de zéro
+
+
+
+**Instructions pour lancer notre interface** :
+
+    - Build le NewFitts.pro 
+
+    - Copier le fichier `fittsFormula.svg` depuis `/srcs/NewFitts/Assets` et le coller dans le répertoire de build de l'application
+
+
+
 ## 1. Donner une critique de l'interface fournie et du programme QT associé
 
 - La formule mathématique n'apparait pas à l'écran
@@ -60,10 +82,14 @@ Les deux graphes ainsi que les statistiques sont affichés à la fin de l'expér
 - Diagramme de structure (disponible en format svg, ouvrable avec Firefox)
   
   ![](/Users/nathan/Documents/UTBM/S2/HM40/TP/TP_Fitts/Fitts/TP_loiFitts/doc/Diagrammes/structureDiagram.svg)
+  
+  
 
 - Diagramme d'état / transition (disponible en format svg, ouvrable avec Firefox)
 
 ![](/Users/nathan/Documents/UTBM/S2/HM40/TP/TP_Fitts/Fitts/TP_loiFitts/doc/Diagrammes/stateTransitionDiagram.svg)
+
+
 
 - Diagramme de classe (disponible en format svg, ouvrable avec Firefox)
   
@@ -75,4 +101,14 @@ Les deux graphes ainsi que les statistiques sont affichés à la fin de l'expér
 
 
 
-Les diagrammes au format SVG ont été réalisés avec l'éditeur `Mermaid`, et le rapport a été écrit et généré en markdown par l'éditeur `MarkText`.
+## Captures d'écran de l'application sous macOs
+
+![](/Users/nathan/Documents/UTBM/S2/HM40/TP/TP_Fitts/Fitts/TP_loiFitts/doc/Captures/testView1.png)
+
+![](/Users/nathan/Documents/UTBM/S2/HM40/TP/TP_Fitts/Fitts/TP_loiFitts/doc/Captures/testView2.png)
+
+![](/Users/nathan/Documents/UTBM/S2/HM40/TP/TP_Fitts/Fitts/TP_loiFitts/doc/Captures/testView3.png)
+
+![](/Users/nathan/Documents/UTBM/S2/HM40/TP/TP_Fitts/Fitts/TP_loiFitts/doc/Captures/configView.png)
+
+![](/Users/nathan/Documents/UTBM/S2/HM40/TP/TP_Fitts/Fitts/TP_loiFitts/doc/Captures/graphView.png)
