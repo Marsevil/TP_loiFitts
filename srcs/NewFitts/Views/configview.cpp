@@ -3,18 +3,15 @@
 ConfigView::ConfigView(Config _config, QWidget *parent)
     : QWidget(parent), config(_config)
 {
-    QLayout* mainLayout = new QHBoxLayout;
+    QLayout* mainLayout = new QHBoxLayout(this);
     setLayout(mainLayout);
 
-    //QWidget* centeredWidget = new QWidget;
-    //centeredWidget->setMaximumWidth(800);
-    QLayout* centeredLayout = new QVBoxLayout;
-    //centeredLayout->addWidget(centeredWidget);
+    QWidget* centeredWidget = new QWidget(this);
+    QLayout* centeredLayout = new QVBoxLayout(centeredWidget);
+    centeredWidget->setLayout(centeredLayout);
     centeredLayout->setAlignment(Qt::AlignHCenter);
 
-    //mainLayout->addWidget(centeredWidget);
-    mainLayout->addItem(centeredLayout);
-
+    mainLayout->addWidget(centeredWidget);
 
     // Titre
     QWidget* titleBox = new QWidget(this);
