@@ -9,7 +9,7 @@ ConfigView::ConfigView(Config _config, QWidget *parent)
     QWidget* centeredWidget = new QWidget(this);
     QLayout* centeredLayout = new QVBoxLayout(centeredWidget);
     centeredWidget->setLayout(centeredLayout);
-    centeredLayout->setAlignment(Qt::AlignHCenter);
+    centeredLayout->setAlignment(Qt::AlignCenter);
 
     mainLayout->addWidget(centeredWidget);
 
