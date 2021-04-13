@@ -150,7 +150,7 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
     for (std::size_t i = 0; i < config.nbPoint; ++i) {
         expSeries->append(*distance, *time);
 
-        axis->append("T: " + QString::number(*time) + "<br/>D: " + QString::number(*distance), i);
+        axis->append("T: " + QString::number(*time, 'f', 3) + "<br/>D: " + QString::number(*distance, 'f', 3), i);
 
         ++time;
         ++distance;
