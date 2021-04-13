@@ -56,7 +56,7 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
         expSeries->append(i, *time);
         fittsSeries->append(i, *fittsTime);
 
-        axis->append(QString::number(i+1) + "<br/>T: " + QString::number(*time) + "<br/>D: " + QString::number(*distance), i);
+        axis->append(QString::number(i+1) + "<br/>T: " + QString::number(*time) + "<br/>D: " + QString::number(*distance, 'f', 3), i);
 
         ++time;
         ++distance;
@@ -188,7 +188,7 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
     QLabel* nbCibleLabel = new QLabel("Nombre de cibles : " + QString::number(config.nbPoint), parametreBox);
     parametreLayout->addWidget(nbCibleLabel);
 
-    QLabel* tailleIntervalleLabel = new QLabel("Intervalle de taille des cibles : " + QString::number(config.maxSize - config.minSize), parametreBox);
+    QLabel* tailleIntervalleLabel = new QLabel("Intervalle de taille des cibles (mm) : " + QString::number(config.maxSize - config.minSize), parametreBox);
     parametreLayout->addWidget(tailleIntervalleLabel);
 
 
@@ -199,16 +199,16 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
     QLayout* resultatLayout = new QVBoxLayout();
     resultatBox->setLayout(resultatLayout);
 
-    QLabel* ecartTypeLabel = new QLabel("Ecart-Type : " + QString::number(stats.ecartType), resultatBox);
+    QLabel* ecartTypeLabel = new QLabel("Ecart-Type : " + QString::number(stats.ecartType, 'f', 3), resultatBox);
     resultatLayout->addWidget(ecartTypeLabel);
 
-    QLabel* erreurTypeLabel = new QLabel("Erreur-Type : " + QString::number(stats.erreurType), resultatBox);
+    QLabel* erreurTypeLabel = new QLabel("Erreur-Type : " + QString::number(stats.erreurType, 'f', 3), resultatBox);
     resultatLayout->addWidget(erreurTypeLabel);
 
-    QLabel* differenceLabel = new QLabel("Différence moyenne : " + QString::number(stats.diffMoy), resultatBox);
+    QLabel* differenceLabel = new QLabel("Différence moyenne : " + QString::number(stats.diffMoy, 'f', 3), resultatBox);
     resultatLayout->addWidget(differenceLabel);
 
-    QLabel* intervalleLabel = new QLabel("Intervalle de confiance à 95% : " + QString::number(stats.itc95), resultatBox);
+    QLabel* intervalleLabel = new QLabel("Intervalle de confiance à 95% : " + QString::number(stats.itc95, 'f', 3), resultatBox);
     resultatLayout->addWidget(intervalleLabel);
 
     QHBoxLayout* btnLayout = new QHBoxLayout(this);
