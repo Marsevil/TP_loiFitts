@@ -1,10 +1,6 @@
 # Rapport de TP - Loi de Fitts
 
-
-
 Les diagrammes au format SVG inclus dans ce rapport ont été réalisés avec l'éditeur `Mermaid`, et le rapport lui-même a été écrit et généré en markdown grâce à l'éditeur `MarkText`. 
-
-
 
 ****L'archive du TP contient**** :
 
@@ -12,15 +8,11 @@ Les diagrammes au format SVG inclus dans ce rapport ont été réalisés avec l'
 
     - Un répertoire `srcs` contenant un sous-répertoire `OldFitts` qui correspond à la version originale de l'application, retravaillée par nos soins pour mieux coller à l'architecture MVC, ainsi qu'un répertoire `NewFitts` correspondant à notre application construite à partir de zéro
 
-
-
 **Instructions pour lancer notre interface** :
 
     - Build le NewFitts.pro 
 
     - Copier le fichier `fittsFormula.svg` depuis `/srcs/NewFitts/Assets` et le coller dans le répertoire de build de l'application
-
-
 
 ## 1. Donner une critique de l'interface fournie et du programme QT associé
 
@@ -75,40 +67,34 @@ Les deux graphes ainsi que les statistiques sont affichés à la fin de l'expér
 
 - Dictionnaire de données (disponible dans le dossier en format pdf)
   
-  ![](/Users/nathan/Documents/UTBM/S2/HM40/TP/TP_Fitts/Fitts/TP_loiFitts/doc/Dictionnaire%20de%20Données/DictionnaireDeDonnees.png)
+  ![](../DictionnaireDonnées/DictionnaireDeDonnees.png)
 
    
 
 - Diagramme de structure (disponible en format svg, ouvrable avec Firefox)
   
-  ![](/Users/nathan/Documents/UTBM/S2/HM40/TP/TP_Fitts/Fitts/TP_loiFitts/doc/Diagrammes/structureDiagram.svg)
-  
-  
+  ![](..//Diagrammes/structureDiagram.svg)
 
 - Diagramme d'état / transition (disponible en format svg, ouvrable avec Firefox)
 
-![](/Users/nathan/Documents/UTBM/S2/HM40/TP/TP_Fitts/Fitts/TP_loiFitts/doc/Diagrammes/stateTransitionDiagram.svg)
-
-
+![](../Diagrammes/stateTransitionDiagram.svg)
 
 - Diagramme de classe (disponible en format svg, ouvrable avec Firefox)
   
-  ![](/Users/nathan/Documents/UTBM/S2/HM40/TP/TP_Fitts/Fitts/TP_loiFitts/doc/Diagrammes/classDiagram.svg)
+  ![](../Diagrammes/classDiagram.svg)
 
 - Évaluation de la nouvelle interface
   
   La nouvelle interface est très épurée et fonctionnelle. Du point de vue du code source, l'organisation du programme respecte la philosophie de l'architecture MVC, et dispose d'une documentation sous forme de commentaires pour préciser à quoi correspondent chaque bloc de code.
 
-
-
 ## Captures d'écran de l'application sous macOs
 
-![](/Users/nathan/Documents/UTBM/S2/HM40/TP/TP_Fitts/Fitts/TP_loiFitts/doc/Captures/testView1.png)
+![](../Captures/testView1.png)
 
-![](/Users/nathan/Documents/UTBM/S2/HM40/TP/TP_Fitts/Fitts/TP_loiFitts/doc/Captures/testView2.png)
+![](../Captures/testView2.png)
 
-![](/Users/nathan/Documents/UTBM/S2/HM40/TP/TP_Fitts/Fitts/TP_loiFitts/doc/Captures/testView3.png)
+![](../Captures/testView3.png)
 
-![](/Users/nathan/Documents/UTBM/S2/HM40/TP/TP_Fitts/Fitts/TP_loiFitts/doc/Captures/configView.png)
+![](../Captures/configView.png)
 
-![](/Users/nathan/Documents/UTBM/S2/HM40/TP/TP_Fitts/Fitts/TP_loiFitts/doc/Captures/graphView.png)
+![](../Captures/graphView.png)
