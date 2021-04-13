@@ -36,7 +36,7 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
     graphBoxLayout->addWidget(plot);
     QChart* chart = new QChart;
     plot->setChart(chart);
-    chart->setTitle("Résultat loi Fitts");
+    chart->setTitle("Temps en fonction de l'atteinte d'une cible n");
     chart->setAnimationOptions(QChart::AllAnimations);
     chart->createDefaultAxes();
     chart->legend()->setVisible(true);
@@ -72,7 +72,7 @@ GraphView::GraphView(Config const& config, Stats const& stats, QWidget *parent) 
     chart->setAxisX(axis, fittsSeries);
 
     QValueAxis* axisY = new QValueAxis;
-    axisY->setTitleText("temps (en ms)");
+    axisY->setTitleText("Temps (en ms)");
     chart->setAxisY(axisY, expSeries);
 
     // Distance relative x time.
